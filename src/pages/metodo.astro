@@ -1,0 +1,282 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Journey from '../components/Journey.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import foto from '../assets/img/banners/banner_natacao_adulto.jpg';
+import { metodo, citacaoMetodo } from '../data/metodo';
+import { url } from '../lib/url';
+---
+<Base title="Metodologia de natação" description="Metodologia Gustavo Borges na Aquacenter: aprendizagem por aproximações sucessivas, 7 níveis infantis com mascotes (Estrela do mar a Golfinho), avaliação periódica e níveis para adultos." image={foto}>
+  <PageHero titulo="A jornada do nadador" eyebrow="Metodologia Gustavo Borges" lead={citacaoMetodo} imagem={foto} migalhas={[{ label: 'Metodologia' }]} />
+
+  <section class="section" data-depth-label="Método de ensino">
+    <div class="container ensino">
+      <div>
+        <p class="eyebrow" data-reveal>Método de ensino</p>
+        <h2 class="h-lg" data-split>{metodo.ensino.titulo}.</h2>
+      </div>
+      <div class="ensino__cards">
+        <article data-reveal><p class="t">Objetivo</p><p>{metodo.ensino.objetivo}</p></article>
+        <article data-reveal><p class="t">Princípio básico</p><p>{metodo.ensino.principio}</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section deep on-dark" data-depth-label="Níveis infantis" data-depth-hide>
+    <svg class="wave wave--top" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true" data-wave style="--wave-fill: var(--c-navy)"><path d="M0 45 Q 360 0 720 45 T 1440 45 V 90 H 0 Z" /></svg>
+    <div class="container">
+      <div class="deep__head">
+        <p class="eyebrow light" data-reveal>Níveis infantis</p>
+        <h2 class="h-lg" data-split>Objetivos e mascotes.</h2>
+        <p class="lead" data-reveal>Os níveis são adequados à faixa etária e ao desenvolvimento cognitivo e psicomotor de cada criança.</p>
+      </div>
+      <Journey detalhado />
+    </div>
+  </section>
+
+  <section class="section" data-depth-label="Avaliação">
+    <svg class="wave wave--top" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true" data-wave><path d="M0 45 Q 360 0 720 45 T 1440 45 V 90 H 0 Z" /></svg>
+    <div class="container aval">
+      <div>
+        <p class="eyebrow" data-reveal>Avaliação e troca de nível</p>
+        <h2 class="h-md" data-split>Cada conquista vale um certificado.</h2>
+        <p class="lead" data-reveal>{metodo.avaliacao.texto}</p>
+      </div>
+      <ol class="regras">
+        {metodo.avaliacao.regras.map((r, i) => <li data-reveal><span>{i + 1}</span><p>{r}</p></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section mist" data-depth-label="Processo">
+    <div class="container">
+      <p class="eyebrow" data-reveal>Processos da aprendizagem</p>
+      <h2 class="h-md" data-split>{metodo.estilos.objetivo}</h2>
+      <ol class="etapas">
+        {metodo.estilos.etapas.map((e, i) => <li data-reveal><span>{String(i + 1).padStart(2, '0')}</span>{e}</li>)}
+      </ol>
+      <div class="fases">
+        {metodo.fases.map((f) => (
+          <article data-reveal>
+            <p class="t">{f.titulo}</p>
+            <ul>{f.itens.map((x) => <li>{x}</li>)}</ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-depth-label="Bebês">
+    <div class="container bebes">
+      <div>
+        <p class="eyebrow" data-reveal>Bebês</p>
+        <h2 class="h-md" data-split>Primeiros exercícios na água.</h2>
+        <p class="lead" data-reveal>{metodo.bebes.objetivo}</p>
+      </div>
+      <ol class="regras">
+        {metodo.bebes.exercicios.map((e, i) => <li data-reveal><span>{i + 1}</span><p>{e}</p></li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section mist" data-depth-label="Faixas etárias">
+    <div class="container">
+      <p class="eyebrow" data-reveal>Faixas etárias</p>
+      <h2 class="h-md" data-split>O que se espera em cada fase.</h2>
+      <div class="faixas">
+        {metodo.faixas.map((f, i) => (
+          <details data-reveal open={i === 0}>
+            <summary><span>{f.idade}</span><Icon name="arrowDown" /></summary>
+            <p>{f.texto}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-depth-label="Adultos">
+    <div class="container">
+      <p class="eyebrow" data-reveal>Natação adultos</p>
+      <h2 class="h-md" data-split>Níveis e objetivos.</h2>
+      <div class="adultos">
+        {metodo.adultos.map((a) => <article data-reveal><p class="t">{a.nivel}</p><p>{a.texto}</p></article>)}
+      </div>
+      <p style="margin-top:28px" data-reveal><a class="link-arrow" href={url('/natacao-adulto/')}>Natação adulto: horários e benefícios <Icon name="arrow" /></a></p>
+    </div>
+  </section>
+
+  <CtaBand titulo="Agende uma aula experimental de natação" mensagem="Olá! Gostaria de agendar uma aula experimental de natação." />
+</Base>
+
+<style>
+  .t {
+    font: 700 21px/1.2 var(--f-display);
+    letter-spacing: -0.015em;
+    margin-bottom: 10px;
+  }
+  .ensino,
+  .aval,
+  .bebes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(28px, 5vw, 80px);
+    align-items: start;
+  }
+  .ensino h2,
+  .aval h2,
+  .bebes h2 {
+    margin: 14px 0 18px;
+  }
+  .ensino__cards {
+    display: grid;
+    gap: 16px;
+  }
+  .ensino__cards article,
+  .fases article,
+  .adultos article {
+    padding: 26px;
+    border-radius: var(--r-md);
+    background: #fff;
+    box-shadow: var(--shadow-1);
+  }
+  .ensino__cards p:not(.t),
+  .fases li,
+  .adultos p:not(.t) {
+    color: var(--c-muted);
+  }
+  .deep {
+    margin-top: clamp(40px, 5vw, 70px);
+    background: linear-gradient(180deg, var(--c-navy), var(--c-abyss));
+  }
+  .deep__head {
+    display: grid;
+    gap: 18px;
+    justify-items: center;
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto clamp(40px, 6vw, 80px);
+  }
+  .regras {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 12px;
+  }
+  .regras li {
+    display: flex;
+    gap: 16px;
+    padding: 18px 20px;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: inset 0 0 0 1px var(--c-line);
+  }
+  .regras span {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--c-aqua);
+    color: #fff;
+    font: 800 15px var(--f-display);
+  }
+  .mist {
+    background: var(--c-mist);
+  }
+  .mist h2 {
+    margin: 14px 0 32px;
+    max-width: 24ch;
+  }
+  .etapas {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    counter-reset: e;
+  }
+  .etapas li {
+    display: grid;
+    gap: 8px;
+    padding: 20px;
+    border-radius: 16px;
+    background: #fff;
+    font-weight: 700;
+  }
+  .etapas span {
+    color: var(--c-brand);
+    font: 800 13px var(--f-display);
+  }
+  .fases {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 28px;
+  }
+  .fases ul {
+    padding-left: 18px;
+    display: grid;
+    gap: 6px;
+  }
+  .faixas {
+    display: grid;
+    gap: 10px;
+  }
+  .faixas details {
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: var(--shadow-1);
+  }
+  .faixas summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 24px;
+    cursor: pointer;
+    list-style: none;
+    font: 700 21px var(--f-display);
+  }
+  .faixas summary::-webkit-details-marker {
+    display: none;
+  }
+  .faixas summary :global(svg) {
+    width: 22px;
+    color: var(--c-brand);
+    transition: transform 0.35s var(--ease-out);
+  }
+  .faixas details[open] summary :global(svg) {
+    transform: rotate(180deg);
+  }
+  .faixas details p {
+    padding: 0 24px 22px;
+    color: var(--c-muted);
+  }
+  .adultos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 28px;
+  }
+  @media (max-width: 1000px) {
+    .ensino,
+    .aval,
+    .bebes,
+    .fases {
+      grid-template-columns: 1fr;
+    }
+    .etapas,
+    .adultos {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 520px) {
+    .etapas,
+    .adultos {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

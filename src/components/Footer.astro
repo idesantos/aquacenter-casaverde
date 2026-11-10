@@ -1,0 +1,223 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import logoBranco from '../assets/img/marca/logo-branco.png';
+import { site, funcionamento, whatsappLink } from '../data/site';
+import { modalidades } from '../data/modalidades';
+import { url } from '../lib/url';
+const ano = new Date().getFullYear();
+---
+<footer class="ftr on-dark" data-depth-label="Fundo da piscina">
+  <svg class="wave wave--top" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true" data-wave style="--wave-fill: var(--c-abyss)"><path d="M0 45 Q 360 0 720 45 T 1440 45 V 90 H 0 Z" /></svg>
+  <div class="ftr__deco" aria-hidden="true"><div class="ftr__lane"></div></div>
+  <div class="container ftr__grid">
+    <div class="ftr__brand">
+      <Image src={logoBranco} alt="Aquacenter Casa Verde" width={132} height={90} />
+      <p>Natação, hidroginástica, musculação e ginástica para toda a família, desde {site.desde}.</p>
+      <div class="ftr__social">
+        <a href={site.instagram} target="_blank" rel="noopener" aria-label="Instagram"><Icon name="instagram" /></a>
+        <a href={site.facebook} target="_blank" rel="noopener" aria-label="Facebook"><Icon name="facebook" /></a>
+        <a href={whatsappLink()} target="_blank" rel="noopener" aria-label="WhatsApp" data-track="whatsapp"><Icon name="whatsapp" /></a>
+      </div>
+    </div>
+    <div>
+      <p class="ftr__title">Funcionamento</p>
+      <ul class="ftr__list">
+        {funcionamento.linhas.map((l) => <li><span>{l.dias}</span><strong>{l.horario}</strong></li>)}
+      </ul>
+      <p class="ftr__title" style="margin-top:28px">Contato</p>
+      <ul class="ftr__contact">
+        <li><a href={site.telefone.link} data-track="telefone"><Icon name="phone" />{site.telefone.exibicao}</a></li>
+        <li><a href={whatsappLink()} target="_blank" rel="noopener" data-track="whatsapp"><Icon name="whatsapp" />{site.whatsapp.exibicao}</a></li>
+        {site.email && <li><a href={`mailto:${site.email}`}><Icon name="mail" />{site.email}</a></li>}
+        <li><a href={site.mapsRota} target="_blank" rel="noopener" data-track="rota"><Icon name="pin" />{site.endereco.rua} – {site.endereco.bairro}<br />{site.endereco.cidade}/{site.endereco.uf} · CEP {site.endereco.cep}</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="ftr__title">Modalidades</p>
+      <ul class="ftr__links ftr__links--2">
+        {modalidades.map((m) => <li><a href={url(`/${m.slug}/`)}>{m.nome}</a></li>)}
+      </ul>
+    </div>
+    <div>
+      <p class="ftr__title">A academia</p>
+      <ul class="ftr__links">
+        <li><a href={url('/sobre/')}>Sobre a Aquacenter</a></li>
+        <li><a href={url('/metodo/')}>Metodologia de natação</a></li>
+        <li><a href={url('/horarios/')}>Horários</a></li>
+        <li><a href={url('/planos/')}>Planos e matrícula</a></li>
+        <li><a href={url('/convenios/')}>Convênios</a></li>
+        <li><a href={url('/contato/')}>Contato</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container ftr__bottom">
+    <p>© {ano} Academia Aquacenter Casa Verde. CNPJ 27.926.073/0001-65. Todos os direitos reservados.</p>
+    <a href="#top" class="ftr__top">Voltar à superfície <Icon name="arrowDown" /></a>
+  </div>
+</footer>
+
+<style>
+  .ftr {
+    position: relative;
+    margin-top: clamp(40px, 6vw, 90px);
+    padding-block: clamp(70px, 9vw, 120px) 32px;
+    background-color: var(--c-abyss);
+    /* Pastilhas do fundo da piscina */
+    background-image:
+      linear-gradient(rgb(255 255 255 / 4%) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(255 255 255 / 4%) 1px, transparent 1px),
+      radial-gradient(120% 90% at 20% 0%, rgb(25 181 220 / 22%), transparent 60%);
+    background-size:
+      36px 36px,
+      36px 36px,
+      100% 100%;
+  }
+  .ftr__deco {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .ftr__lane {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 52%;
+    height: 72px;
+    background:
+      linear-gradient(rgb(255 255 255 / 5%) 1px, transparent 1px) 0 0 / 36px 36px,
+      linear-gradient(90deg, rgb(255 255 255 / 5%) 1px, transparent 1px) 0 0 / 36px 36px,
+      rgb(25 181 220 / 7%);
+    pointer-events: none;
+  }
+  .ftr__grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.2fr 1.3fr 1.4fr 1fr;
+    gap: 40px;
+  }
+  .ftr__brand p {
+    margin-top: 20px;
+    max-width: 30ch;
+    color: rgb(255 255 255 / 70%);
+  }
+  .ftr__social {
+    display: flex;
+    gap: 10px;
+    margin-top: 24px;
+  }
+  .ftr__social a {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 8%);
+    transition: background 0.3s;
+  }
+  .ftr__social a:hover {
+    background: var(--c-brand);
+  }
+  .ftr__social :global(svg) {
+    width: 20px;
+    height: 20px;
+  }
+  .ftr__title {
+    margin-bottom: 14px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--c-sky);
+  }
+  .ftr ul {
+    list-style: none;
+  }
+  .ftr__list li {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 6px 0;
+    border-bottom: 1px solid rgb(255 255 255 / 10%);
+    font-size: 15px;
+  }
+  .ftr__list span {
+    color: rgb(255 255 255 / 70%);
+  }
+  .ftr__contact li {
+    padding: 5px 0;
+  }
+  .ftr__contact a {
+    display: flex;
+    gap: 10px;
+    font-size: 15px;
+    text-decoration: none;
+    color: rgb(255 255 255 / 85%);
+    word-break: break-word;
+  }
+  .ftr__contact a:hover,
+  .ftr__links a:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+  .ftr__contact :global(svg) {
+    flex: none;
+    width: 18px;
+    height: 18px;
+    margin-top: 3px;
+    color: var(--c-sky);
+  }
+  .ftr__links a {
+    display: block;
+    padding: 5px 0;
+    font-size: 15px;
+    text-decoration: none;
+    color: rgb(255 255 255 / 80%);
+  }
+  .ftr__links--2 {
+    columns: 2;
+    column-gap: 20px;
+  }
+  .ftr__bottom {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid rgb(255 255 255 / 12%);
+    font-size: 14px;
+    color: rgb(255 255 255 / 60%);
+  }
+  .ftr__top {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+  }
+  .ftr__top :global(svg) {
+    width: 18px;
+    transform: rotate(180deg);
+  }
+  @media (max-width: 1000px) {
+    .ftr__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 640px) {
+    .ftr {
+      padding-bottom: calc(96px + env(safe-area-inset-bottom));
+    }
+    .ftr__grid {
+      grid-template-columns: 1fr;
+    }
+    .ftr__bottom {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

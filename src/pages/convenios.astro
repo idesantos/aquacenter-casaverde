@@ -1,0 +1,88 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import foto from '../assets/img/banners/banner_espaco_do_aluno.jpg';
+import { convenios, site, whatsappLink } from '../data/site';
+---
+<Base title="Convênios" description="Descontos especiais para grupos de empresas, condomínios e colégios na Aquacenter Casa Verde, com transporte ida e volta por perua escolar credenciada." image={foto}>
+  <PageHero titulo="Nossos convênios" eyebrow="Empresas · Condomínios · Colégios" lead="Descontos especiais para grupos, em alguns horários específicos." imagem={foto} migalhas={[{ label: 'Convênios' }]} />
+
+  <section class="section" data-depth-label="Convênios">
+    <div class="container conv">
+      <div>
+        <p class="eyebrow" data-reveal>Forme seu grupo</p>
+        <p class="conv__text" data-reveal>{convenios.texto}</p>
+      </div>
+      <div class="conv__cards">
+        {convenios.publicos.map((p) => <article data-reveal><Icon name="users" /><p>{p}</p></article>)}
+        <article class="conv__bus" data-reveal><Icon name="car" /><p>Transporte ida e volta com perua escolar credenciada</p></article>
+      </div>
+    </div>
+    <div class="container conv__actions" data-reveal>
+      <a class="btn btn--accent" href={whatsappLink('Olá! Gostaria de informações sobre convênios para grupos.')} target="_blank" rel="noopener" data-track="whatsapp"><Icon name="whatsapp" /> Falar no WhatsApp</a>
+      {site.email && <a class="btn btn--outline" href={`mailto:${site.email}?subject=Convênio`}><Icon name="mail" /> {site.email}</a>}
+    </div>
+  </section>
+  <CtaBand />
+</Base>
+
+<style>
+  .conv {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: clamp(28px, 5vw, 80px);
+    align-items: start;
+  }
+  .conv__text {
+    margin-top: 18px;
+    font: 500 clamp(22px, 2vw, 30px) / 1.42 var(--f-display);
+    letter-spacing: -0.015em;
+  }
+  .conv__cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .conv__cards article {
+    display: grid;
+    gap: 14px;
+    padding: 24px;
+    border-radius: var(--r-md);
+    background: #fff;
+    box-shadow: var(--shadow-1);
+    font: 700 20px/1.2 var(--f-display);
+  }
+  .conv__cards :global(svg) {
+    width: 30px;
+    height: 30px;
+    color: var(--c-brand);
+  }
+  .conv__bus {
+    grid-column: span 2;
+    background: var(--c-navy) !important;
+    color: #fff;
+  }
+  .conv__bus :global(svg) {
+    color: var(--c-sky) !important;
+  }
+  .conv__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 40px;
+  }
+  @media (max-width: 900px) {
+    .conv {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 480px) {
+    .conv__actions .btn {
+      width: 100%;
+      font-size: 14px;
+      word-break: break-all;
+    }
+  }
+</style>

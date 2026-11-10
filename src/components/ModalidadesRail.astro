@@ -1,0 +1,249 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { modalidades, categoriaNome } from '../data/modalidades';
+import { url } from '../lib/url';
+
+type Props = { pin?: boolean; exclude?: string };
+const { pin = false, exclude } = Astro.props;
+const lista = modalidades.filter((m) => m.slug !== exclude);
+---
+<div class:list={['rail', { 'rail--pin': pin }]} data-rail={pin ? 'pin' : 'scroll'}>
+  <div class="rail__track" data-rail-track>
+    {lista.map((m, i) => (
+      <a class="card" href={url(`/${m.slug}/`)} data-tilt>
+        <div class="card__media">
+          <Image src={m.imagem} alt="" widths={[360, 560, 760]} sizes="(max-width: 760px) 78vw, 380px" loading={i < 4 ? 'eager' : 'lazy'} />
+        </div>
+        <span class="card__glare" aria-hidden="true"></span>
+        <div class="card__top">
+          <span class="card__num">{String(i + 1).padStart(2, '0')}</span>
+          <span class="card__tags">{m.categorias.map((c) => <span>{categoriaNome[c]}</span>)}</span>
+        </div>
+        <div class="card__body">
+          <h3 class="card__title">{m.nome}</h3>
+          <p class="card__text">{m.resumo}</p>
+          <span class="card__more">Conhecer <Icon name="arrow" /></span>
+        </div>
+      </a>
+    ))}
+  </div>
+  <div class="rail__progress" aria-hidden="true"><span data-rail-bar></span></div>
+</div>
+
+<style>
+  .rail {
+    position: relative;
+  }
+  .rail__track {
+    display: flex;
+    gap: clamp(14px, 1.6vw, 24px);
+    padding-inline: max(var(--gutter), (100vw - 1240px) / 2);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+    padding-block: 10px 30px;
+    overscroll-behavior-x: contain;
+  }
+  .rail__track::-webkit-scrollbar {
+    display: none;
+  }
+  .card {
+    --rx: 0deg;
+    --ry: 0deg;
+    position: relative;
+    flex: none;
+    width: clamp(260px, 78vw, 380px);
+    aspect-ratio: 3 / 4;
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    isolation: isolate;
+    color: #fff;
+    text-decoration: none;
+    scroll-snap-align: start;
+    background: var(--c-deep);
+    box-shadow: var(--shadow-2);
+    transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));
+    transition: transform 0.5s var(--ease-out);
+  }
+  .card__media,
+  .card__media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .card__media img {
+    transform: scale(1.04);
+    transition: transform 1.2s var(--ease-out);
+  }
+  .card:hover .card__media img {
+    transform: scale(1.12);
+  }
+  .card__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgb(4 26 51 / 35%) 0%, transparent 30%, rgb(4 26 51 / 15%) 50%, rgb(4 26 51 / 88%) 100%);
+  }
+  .card__glare {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: radial-gradient(40% 40% at var(--mx, 50%) var(--my, 0%), rgb(255 255 255 / 22%), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .card:hover .card__glare {
+    opacity: 1;
+  }
+  .card__top {
+    position: absolute;
+    z-index: 2;
+    inset: 20px 20px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .card__num {
+    font: 700 14px var(--f-display);
+    opacity: 0.8;
+  }
+  .card__tags {
+    display: flex;
+    gap: 6px;
+  }
+  .card__tags span {
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    background: rgb(255 255 255 / 16%);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  .card__body {
+    position: absolute;
+    z-index: 2;
+    inset: auto 22px 22px;
+  }
+  .card__title {
+    font-size: clamp(26px, 2.3vw, 32px);
+    line-height: 1;
+  }
+  .card__text {
+    margin-top: 10px;
+    font-size: 15px;
+    line-height: 1.45;
+    color: rgb(255 255 255 / 82%);
+  }
+  .card__more {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 9px 16px;
+    border-radius: 999px;
+    background: #fff;
+    color: var(--c-ink);
+    font-size: 14px;
+    font-weight: 800;
+    transition:
+      background 0.3s,
+      color 0.3s;
+  }
+  .card__more :global(svg) {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.35s var(--ease-out);
+  }
+  .card:hover .card__more {
+    background: var(--c-accent);
+    color: #fff;
+  }
+  .card:hover .card__more :global(svg) {
+    transform: translateX(4px);
+  }
+  .rail__progress {
+    width: var(--container);
+    margin: 8px auto 0;
+    height: 3px;
+    border-radius: 3px;
+    background: var(--c-line);
+    overflow: hidden;
+  }
+  .rail__progress span {
+    display: block;
+    height: 100%;
+    background: var(--c-brand);
+    transform-origin: left;
+    transform: scaleX(0.1);
+  }
+
+  /* Desktop: a lista corre na horizontal enquanto a página rola. */
+  @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+    .rail--pin .rail__track {
+      overflow: visible;
+      scroll-snap-type: none;
+      width: max-content;
+      will-change: transform;
+    }
+    .rail--pin {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .rail--pin .rail__track {
+      flex: 1;
+      min-height: 0;
+      padding-block: 6px 18px;
+    }
+    .rail--pin .card {
+      height: 100%;
+      width: auto;
+      aspect-ratio: 3 / 4;
+    }
+  }
+</style>
+
+<script>
+  import { gsap, ScrollTrigger } from '../scripts/motion';
+
+  document.querySelectorAll<HTMLElement>('[data-rail]').forEach((rail) => {
+    const track = rail.querySelector<HTMLElement>('[data-rail-track]')!;
+    const bar = rail.querySelector<HTMLElement>('[data-rail-bar]')!;
+    const mm = gsap.matchMedia();
+
+    if (rail.dataset.rail === 'pin') {
+      mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
+        const section = rail.closest<HTMLElement>('[data-rail-section]') ?? rail;
+        const dist = () => Math.max(0, track.scrollWidth - innerWidth);
+        gsap.to(track, {
+          x: () => -dist(),
+          ease: 'none',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top top',
+            end: () => `+=${dist()}`,
+            pin: true,
+            scrub: 0.8,
+            invalidateOnRefresh: true,
+            onUpdate: (st) => gsap.set(bar, { scaleX: 0.1 + st.progress * 0.9 }),
+          },
+        });
+      });
+    }
+
+    // Rolagem nativa (mobile ou trilho simples): a barra acompanha.
+    const sync = () => {
+      const max = track.scrollWidth - track.clientWidth;
+      if (max > 0) gsap.set(bar, { scaleX: 0.1 + (track.scrollLeft / max) * 0.9 });
+    };
+    track.addEventListener('scroll', sync, { passive: true });
+  });
+
+  addEventListener('load', () => ScrollTrigger.refresh());
+</script>

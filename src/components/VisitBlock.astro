@@ -1,0 +1,141 @@
+---
+import Icon from './Icon.astro';
+import { site, funcionamento, whatsappLink } from '../data/site';
+---
+<div class="visit">
+  <div class="visit__info" data-reveal>
+    <p class="eyebrow">Venha nos visitar</p>
+    <h2 class="h-md visit__addr">{site.endereco.rua}<br /><span>{site.endereco.bairro} · {site.endereco.cidade}/{site.endereco.uf}</span></h2>
+    <ul class="visit__list">
+      <li><Icon name="clock" /><div>{funcionamento.linhas.map((l) => <p><strong>{l.dias}</strong> · {l.horario}</p>)}</div></li>
+      <li><Icon name="phone" /><a href={site.telefone.link} data-track="telefone">{site.telefone.exibicao}</a></li>
+      <li><Icon name="whatsapp" /><a href={whatsappLink()} target="_blank" rel="noopener" data-track="whatsapp">{site.whatsapp.exibicao}</a></li>
+      <li><Icon name="car" /><span>Estacionamento com manobrista</span></li>
+    </ul>
+    <a class="btn btn--accent" href={site.mapsRota} target="_blank" rel="noopener" data-track="rota"><Icon name="pin" /> Traçar rota</a>
+  </div>
+  <div class="visit__map" data-reveal>
+    <button class="visit__load" data-map-load type="button" aria-label="Carregar mapa">
+      <span class="visit__pin"><Icon name="pin" /></span>
+      <span>Ver no mapa</span>
+    </button>
+    <template data-map-tpl>
+      <iframe title="Mapa: Aquacenter Casa Verde" src={site.mapsEmbed} loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+    </template>
+  </div>
+</div>
+
+<style>
+  .visit {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: clamp(28px, 4vw, 60px);
+    align-items: stretch;
+  }
+  .visit__addr {
+    margin-top: 14px;
+  }
+  .visit__addr span {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.55em;
+    color: var(--c-muted);
+    letter-spacing: -0.01em;
+  }
+  .visit__list {
+    list-style: none;
+    display: grid;
+    gap: 14px;
+    margin: 28px 0 30px;
+  }
+  .visit__list li {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .visit__list :global(svg) {
+    flex: none;
+    width: 22px;
+    height: 22px;
+    margin-top: 2px;
+    color: var(--c-brand);
+  }
+  .visit__list a {
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .visit__list a:hover {
+    color: var(--c-brand);
+  }
+  .visit__map {
+    position: relative;
+    min-height: 380px;
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-2);
+    background:
+      linear-gradient(rgb(5 69 122 / 6%) 1px, transparent 1px) 0 0 / 28px 28px,
+      linear-gradient(90deg, rgb(5 69 122 / 6%) 1px, transparent 1px) 0 0 / 28px 28px,
+      var(--c-mist);
+  }
+  .visit__map iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .visit__load {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 12px;
+    border: 0;
+    background: none;
+    color: var(--c-deep);
+    font: 700 16px var(--f-body);
+    cursor: pointer;
+  }
+  .visit__pin {
+    display: grid;
+    place-items: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--c-accent);
+    color: #fff;
+    box-shadow: 0 0 0 12px rgb(255 106 26 / 18%), 0 0 0 26px rgb(255 106 26 / 8%);
+  }
+  .visit__pin :global(svg) {
+    width: 32px;
+    height: 32px;
+  }
+  @media (max-width: 860px) {
+    .visit {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  // O mapa só carrega quando a pessoa pede (ou quando chega perto) — economiza dados e tempo de carregamento.
+  document.querySelectorAll<HTMLElement>('.visit__map').forEach((box) => {
+    const load = () => {
+      const tpl = box.querySelector<HTMLTemplateElement>('[data-map-tpl]');
+      if (!tpl) return;
+      box.append(tpl.content.cloneNode(true));
+      tpl.remove();
+      box.querySelector('[data-map-load]')?.remove();
+    };
+    box.querySelector('[data-map-load]')?.addEventListener('click', load);
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) {
+        setTimeout(load, 600);
+        io.disconnect();
+      }
+    }, { rootMargin: '200px' });
+    io.observe(box);
+  });
+</script>

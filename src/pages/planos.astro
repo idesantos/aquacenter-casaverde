@@ -1,0 +1,14 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import PlanosGrid from '../components/PlanosGrid.astro';
+import CtaBand from '../components/CtaBand.astro';
+import foto from '../assets/img/banners/bg_free_pass.jpg';
+---
+<Base title="Planos e matrícula" description="Faça sua matrícula na Aquacenter Casa Verde: planos adulto piscina, musculação e ginástica, natação infantil e natação bebê. Fale com a gente pelo WhatsApp." image={foto}>
+  <PageHero titulo="Faça sua matrícula" eyebrow="Planos" lead="Escolha o plano e fale com a gente pelo WhatsApp para conhecer valores e condições." imagem={foto} migalhas={[{ label: 'Planos' }]} />
+  <section class="section" data-depth-label="Planos">
+    <div class="container"><PlanosGrid /></div>
+  </section>
+  <CtaBand titulo="Ainda com dúvida? Faça uma aula experimental grátis" />
+</Base>

@@ -1,0 +1,132 @@
+---
+import { Image, getImage } from 'astro:assets';
+import { url } from '../lib/url';
+
+type Props = {
+  titulo: string;
+  eyebrow?: string;
+  lead?: string;
+  imagem?: ImageMetadata;
+  migalhas?: { label: string; href?: string }[];
+};
+const { titulo, eyebrow, lead, imagem, migalhas = [] } = Astro.props;
+const tex = imagem ? await getImage({ src: imagem, width: Math.min(1600, imagem.width), format: 'webp' }) : null;
+---
+<section class:list={['phero on-dark', { 'phero--pool': !imagem }]} data-phero data-depth-label="Superfície">
+  <div class="phero__bg" aria-hidden="true">
+    {imagem && <Image src={imagem} alt="" widths={[640, 1080, 1600]} sizes="100vw" loading="eager" fetchpriority="high" class="phero__img" />}
+    <canvas class="phero__canvas" data-water data-mode={imagem ? 'image' : 'pool'} data-src={tex?.src}></canvas>
+    <div class="phero__shade"></div>
+  </div>
+  <div class="container phero__content">
+    <nav aria-label="Você está em" class="phero__crumbs">
+      <a href={url('/')}>Início</a>
+      {migalhas.map((m) => (
+        <>
+          <span aria-hidden="true">/</span>
+          {m.href ? <a href={url(m.href)}>{m.label}</a> : <span aria-current="page">{m.label}</span>}
+        </>
+      ))}
+    </nav>
+    {eyebrow && <p class="eyebrow light" data-reveal>{eyebrow}</p>}
+    <h1 class="h-xl phero__title" data-split>{titulo}</h1>
+    {lead && <p class="lead phero__lead" data-reveal>{lead}</p>}
+    <slot />
+  </div>
+</section>
+
+<style>
+  .phero {
+    position: relative;
+    min-height: min(82svh, 820px);
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    background: var(--c-deep);
+  }
+  .phero__bg,
+  .phero__img,
+  .phero__canvas,
+  .phero__shade {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .phero__img {
+    object-fit: cover;
+  }
+  .phero--pool .phero__bg {
+    background:
+      linear-gradient(rgb(255 255 255 / 40%) 2px, transparent 2px) 0 0 / 4.4vh 4.4vh,
+      linear-gradient(90deg, rgb(255 255 255 / 40%) 2px, transparent 2px) 0 0 / 4.4vh 4.4vh,
+      linear-gradient(transparent 22%, #0a4a7d 22% 30%, transparent 30% 72%, #0a4a7d 72% 80%, transparent 80%),
+      #28a9cb;
+  }
+  .phero__canvas {
+    opacity: 0;
+    transition: opacity 0.8s;
+  }
+  .phero__canvas[data-live] {
+    opacity: 1;
+  }
+  .phero__shade {
+    pointer-events: none;
+    background:
+      linear-gradient(0deg, rgb(4 26 51 / 85%) 0%, rgb(4 26 51 / 35%) 50%, rgb(4 26 51 / 25%) 100%),
+      linear-gradient(90deg, rgb(4 26 51 / 45%), transparent 70%);
+  }
+  .phero__content {
+    position: relative;
+    z-index: 2;
+    padding-top: calc(var(--header-h) + 60px);
+    padding-bottom: clamp(56px, 8vw, 100px);
+    pointer-events: none;
+  }
+  .phero__content > * {
+    pointer-events: auto;
+  }
+  .phero__crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 22px;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(255 255 255 / 70%);
+  }
+  .phero__crumbs a {
+    text-decoration: none;
+  }
+  .phero__crumbs a:hover {
+    color: #fff;
+  }
+  .phero__title {
+    margin-top: 14px;
+    max-width: 14ch;
+    text-shadow: 0 4px 40px rgb(4 26 51 / 40%);
+  }
+  .phero__lead {
+    margin-top: 20px;
+    max-width: 56ch;
+  }
+</style>
+
+<script>
+  import { createWater } from '../scripts/water/engine';
+  import { reduced } from '../scripts/motion';
+
+  const canvas = document.querySelector<HTMLCanvasElement>('[data-phero] [data-water]');
+  if (canvas && !reduced) {
+    const mode = canvas.dataset.mode as 'image' | 'pool';
+    const water = createWater(canvas, {
+      mode,
+      image: canvas.dataset.src,
+      idleDrops: mode === 'pool',
+      onReady: () => {
+        canvas.setAttribute('data-live', '');
+        setTimeout(() => water?.splash(0.72, 0.45, mode === 'pool' ? 0.6 : 0.35), 250);
+      },
+    });
+  }
+</script>

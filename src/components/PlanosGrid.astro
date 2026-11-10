@@ -1,0 +1,101 @@
+---
+import Icon from './Icon.astro';
+import { planos, whatsappLink } from '../data/site';
+---
+<div class="planos">
+  {planos.map((p, i) => (
+    <article class="plano" data-reveal data-tilt>
+      <span class="plano__n" aria-hidden="true">0{i + 1}</span>
+      <p class="plano__pub">{p.publico}</p>
+      <h3 class="plano__nome">{p.nome}</h3>
+      <p class="plano__dest">{p.destaque}</p>
+      <a class="btn btn--accent btn--sm" href={whatsappLink(`Olá! Gostaria de mais informações sobre o plano ${p.nome} (${p.destaque}).`)} target="_blank" rel="noopener" data-track="whatsapp">
+        <Icon name="whatsapp" /> Quero este plano
+      </a>
+    </article>
+  ))}
+</div>
+
+<style>
+  .planos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+  .plano {
+    --rx: 0deg;
+    --ry: 0deg;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 300px;
+    padding: 28px 24px 24px;
+    border-radius: var(--r-lg);
+    background: #fff;
+    box-shadow: var(--shadow-1);
+    overflow: hidden;
+    transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));
+    transition: transform 0.5s var(--ease-out), box-shadow 0.4s;
+  }
+  .plano:hover {
+    box-shadow: var(--shadow-2);
+  }
+  .plano::before {
+    content: '';
+    position: absolute;
+    inset: auto -20% -60% -20%;
+    height: 70%;
+    background: radial-gradient(closest-side, rgb(25 181 220 / 18%), transparent);
+    transition: transform 0.8s var(--ease-out);
+  }
+  .plano:hover::before {
+    transform: translateY(-30%);
+  }
+  .plano__n {
+    position: absolute;
+    right: 20px;
+    top: 14px;
+    font: 800 64px/1 var(--f-display);
+    color: var(--c-mist);
+  }
+  .plano__pub {
+    position: relative;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--c-brand);
+  }
+  .plano__nome {
+    position: relative;
+    font-size: clamp(24px, 2vw, 30px);
+    line-height: 1.05;
+  }
+  .plano__dest {
+    position: relative;
+    color: var(--c-muted);
+    font-weight: 600;
+  }
+  .plano .btn {
+    position: relative;
+    margin-top: auto;
+    align-self: flex-start;
+  }
+  @media (max-width: 1000px) {
+    .planos {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 560px) {
+    .planos {
+      grid-template-columns: 1fr;
+    }
+    .plano {
+      min-height: 0;
+    }
+    .plano .btn {
+      margin-top: 14px;
+    }
+  }
+</style>

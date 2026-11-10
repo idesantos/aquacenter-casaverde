@@ -1,0 +1,333 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Schedule from '../components/Schedule.astro';
+import ModalidadesRail from '../components/ModalidadesRail.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import { modalidades, categoriaNome, mensagemModalidade, type Modalidade } from '../data/modalidades';
+import { grades } from '../data/horarios';
+import { metodo, niveis } from '../data/metodo';
+import { whatsappLink } from '../data/site';
+import { url } from '../lib/url';
+
+export function getStaticPaths() {
+  return modalidades.map((m) => ({ params: { slug: m.slug }, props: { m } }));
+}
+
+const { m } = Astro.props as { m: Modalidade };
+const gradesDaModalidade = grades.filter((g) => g.modalidades.includes(m.slug)).map((g) => g.id);
+const msg = mensagemModalidade(m.nome);
+const primeiraFrase = m.descricao.split(/(?<=\.)\s/)[0];
+---
+<Base title={m.nome} description={`${m.resumo} ${primeiraFrase}`.slice(0, 158)} image={m.imagem}>
+  <PageHero
+    titulo={m.nome}
+    eyebrow={m.categorias.map((c) => categoriaNome[c]).join(' · ')}
+    lead={m.resumo}
+    imagem={m.imagem}
+    migalhas={[{ label: 'Modalidades', href: '/#modalidades' }, { label: m.nome }]}
+  >
+    <div class="mhero__ctas" data-reveal>
+      <a class="btn btn--accent" href={whatsappLink(msg)} target="_blank" rel="noopener" data-track="whatsapp"><Icon name="whatsapp" /> Agendar aula experimental</a>
+      {gradesDaModalidade.length > 0 && <a class="btn btn--ghost" href="#horarios">Ver horários</a>}
+    </div>
+  </PageHero>
+
+  <section class="section" data-depth-label="A modalidade">
+    <div class="container about">
+      <div>
+        <p class="eyebrow" data-reveal>Sobre a modalidade</p>
+        <p class="about__text" data-reveal>{m.descricao}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bens" data-depth-label="Benefícios">
+    <svg class="wave wave--top" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true" data-wave style="--wave-fill: var(--c-mist)"><path d="M0 45 Q 360 0 720 45 T 1440 45 V 90 H 0 Z" /></svg>
+    <div class="container">
+      <p class="eyebrow" data-reveal>Benefícios</p>
+      <h2 class="h-lg bens__title" data-split>Por que fazer {m.nome.toLowerCase()}?</h2>
+      {m.beneficios.lista ? (
+        <ul class="bens__grid">
+          {m.beneficios.lista.map((b, i) => {
+            const [titulo, resto] = b.split(/:\s/);
+            return (
+              <li class="ben" data-reveal>
+                <span class="ben__n">{String(i + 1).padStart(2, '0')}</span>
+                <p class="ben__t">{titulo}</p>
+                {resto && <p class="ben__d">{resto}</p>}
+              </li>
+            );
+          })}
+        </ul>
+      ) : (
+        <p class="bens__quote" data-reveal>{m.beneficios.texto}</p>
+      )}
+    </div>
+  </section>
+
+  {m.slug === 'natacao-bebe-infantil' && (
+    <section class="section" data-depth-label="Metodologia">
+      <div class="container metodo-teaser" data-reveal>
+        <div>
+          <p class="eyebrow">Metodologia Gustavo Borges</p>
+          <h2 class="h-md">7 níveis, 7 mascotes.</h2>
+          <p class="lead">Da Estrela do mar (bebês) ao Golfinho: cada fase tem objetivos claros e avaliação periódica dos professores.</p>
+          <a class="link-arrow" href={url('/metodo/')}>Conheça a jornada do nadador <Icon name="arrow" /></a>
+        </div>
+        <ul class="metodo-teaser__list">
+          {niveis.map((n) => <li><a href={url(`/metodo/#${n.id}`)}><strong>{n.mascote}</strong><span>{n.nivel} · {n.faixa}</span></a></li>)}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {m.slug === 'natacao-adulto' && (
+    <section class="section" data-depth-label="Níveis">
+      <div class="container">
+        <p class="eyebrow" data-reveal>Níveis e objetivos</p>
+        <h2 class="h-md" data-split>Do primeiro contato com a água ao condicionamento avançado.</h2>
+        <ol class="niveis-adulto">
+          {metodo.adultos.map((n, i) => (
+            <li data-reveal><span>{i + 1}</span><div><p class="ben__t">{n.nivel}</p><p class="ben__d">{n.texto}</p></div></li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  )}
+
+  <section class="section" id="horarios" data-depth-label="Horários">
+    <div class="container horarios">
+      <div>
+        <p class="eyebrow" data-reveal>Horários</p>
+        <h2 class="h-md" data-split>Quando tem aula?</h2>
+      </div>
+      {gradesDaModalidade.length > 0 ? (
+        <div data-reveal><Schedule ids={gradesDaModalidade} /></div>
+      ) : (
+        <div class="consulta" data-reveal>
+          <p class="sch-title">Consulte os horários de {m.nome}</p>
+          <p>Chame no WhatsApp e a gente indica o melhor horário para você.</p>
+          <a class="btn btn--accent" href={whatsappLink(`Olá! Quais são os horários de ${m.nome}?`)} target="_blank" rel="noopener" data-track="whatsapp"><Icon name="whatsapp" /> Ver horários no WhatsApp</a>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section class="section difs" data-depth-label="Diferenciais">
+    <div class="container">
+      <p class="eyebrow" data-reveal>Diferenciais da academia</p>
+      <ul class="difs__grid">
+        {m.diferenciais.map((d) => <li data-reveal><Icon name="check" /> {d}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand titulo={`Agende sua aula experimental de ${m.nome}`} mensagem={msg} />
+
+  <section class="section outras" data-depth-label="Outras modalidades">
+    <div class="container">
+      <p class="eyebrow" data-reveal>Outras modalidades</p>
+      <h2 class="h-md" data-split>Combine com outra atividade.</h2>
+    </div>
+    <div class="outras__rail"><ModalidadesRail exclude={m.slug} /></div>
+  </section>
+</Base>
+
+<style>
+  .mhero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+  }
+  .mhero__ctas .btn {
+    color: #fff;
+  }
+  .about {
+    max-width: 980px;
+  }
+  .about__text {
+    margin-top: 20px;
+    font: 500 clamp(22px, 2.1vw, 32px) / 1.42 var(--f-display);
+    letter-spacing: -0.015em;
+    color: var(--c-ink);
+  }
+  .bens {
+    background: var(--c-mist);
+  }
+  .bens__title {
+    margin: 14px 0 clamp(32px, 4vw, 56px);
+    max-width: 18ch;
+  }
+  .bens__grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+  }
+  .ben {
+    padding: 26px 24px;
+    border-radius: var(--r-md);
+    background: #fff;
+    box-shadow: var(--shadow-1);
+  }
+  .ben__n {
+    font: 800 14px var(--f-display);
+    color: var(--c-brand);
+  }
+  .ben__t {
+    margin-top: 10px;
+    font: 700 21px/1.2 var(--f-display);
+    letter-spacing: -0.015em;
+  }
+  .ben__d {
+    margin-top: 8px;
+    color: var(--c-muted);
+    font-size: 16px;
+  }
+  .bens__quote {
+    max-width: 62ch;
+    padding-left: clamp(18px, 3vw, 36px);
+    border-left: 4px solid var(--c-aqua);
+    font-size: clamp(19px, 1.4vw, 23px);
+    line-height: 1.6;
+    color: var(--c-ink);
+  }
+  .metodo-teaser {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+    padding: clamp(28px, 4vw, 56px);
+    border-radius: var(--r-lg);
+    background: linear-gradient(160deg, var(--c-navy), var(--c-abyss));
+    color: #fff;
+  }
+  .metodo-teaser .eyebrow {
+    color: var(--c-sky);
+  }
+  .metodo-teaser h2 {
+    margin: 12px 0;
+  }
+  .metodo-teaser .lead {
+    color: rgb(255 255 255 / 78%);
+    margin-bottom: 18px;
+  }
+  .metodo-teaser .link-arrow {
+    color: var(--c-sky);
+  }
+  .metodo-teaser__list {
+    list-style: none;
+    display: grid;
+    gap: 6px;
+  }
+  .metodo-teaser__list a {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 14px;
+    background: rgb(255 255 255 / 6%);
+    text-decoration: none;
+    transition: background 0.3s;
+  }
+  .metodo-teaser__list a:hover {
+    background: rgb(255 255 255 / 14%);
+  }
+  .metodo-teaser__list span {
+    color: rgb(255 255 255 / 65%);
+    font-size: 14px;
+    text-align: right;
+  }
+  .niveis-adulto {
+    list-style: none;
+    padding: 0;
+    margin-top: 36px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .niveis-adulto li {
+    display: flex;
+    gap: 16px;
+    padding: 24px;
+    border-radius: var(--r-md);
+    background: #fff;
+    box-shadow: var(--shadow-1);
+  }
+  .niveis-adulto li > span {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--c-mist);
+    color: var(--c-deep);
+    font: 800 18px var(--f-display);
+  }
+  .horarios {
+    display: grid;
+    grid-template-columns: 0.6fr 1.4fr;
+    gap: 40px;
+    align-items: start;
+  }
+  .horarios h2 {
+    margin-top: 14px;
+  }
+  .consulta {
+    display: grid;
+    gap: 14px;
+    justify-items: start;
+    padding: clamp(24px, 3vw, 40px);
+    border-radius: var(--r-lg);
+    background: #fff;
+    box-shadow: var(--shadow-2);
+  }
+  .sch-title {
+    font: 700 clamp(22px, 2vw, 28px) / 1.1 var(--f-display);
+  }
+  .consulta p:not(.sch-title) {
+    color: var(--c-muted);
+  }
+  .difs {
+    padding-top: 0;
+  }
+  .difs__grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+  }
+  .difs__grid li {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 18px 20px;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: inset 0 0 0 1px var(--c-line);
+    font-weight: 600;
+  }
+  .difs__grid :global(svg) {
+    flex: none;
+    width: 22px;
+    height: 22px;
+    padding: 3px;
+    border-radius: 50%;
+    background: var(--c-aqua);
+    color: #fff;
+  }
+  .outras h2 {
+    margin: 12px 0 28px;
+  }
+  @media (max-width: 900px) {
+    .metodo-teaser,
+    .horarios {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

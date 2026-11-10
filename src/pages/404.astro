@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import ModalidadesRail from '../components/ModalidadesRail.astro';
+import Icon from '../components/Icon.astro';
+import { url } from '../lib/url';
+---
+<Base title="Página não encontrada" description="A página que você procurou não existe mais. Veja as modalidades da Aquacenter Casa Verde.">
+  <PageHero titulo="Essa página mergulhou fundo demais." eyebrow="Erro 404" lead="O endereço mudou ou não existe mais. Escolha uma modalidade abaixo ou volte para o início." migalhas={[{ label: 'Página não encontrada' }]}>
+    <a class="btn btn--accent" href={url('/')}>Voltar ao início <Icon name="arrow" /></a>
+  </PageHero>
+
+  <section class="section" data-depth-label="Modalidades">
+    <ModalidadesRail />
+  </section>
+</Base>

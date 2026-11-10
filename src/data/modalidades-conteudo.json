@@ -1,0 +1,112 @@
+{
+  "natacao-bebe-infantil": {
+    "titulo": "Natação Bebê / Infantil",
+    "descricao": "Uma atividade excelente no desenvolvimento motor, psíquico e social, sendo um esporte completo, pois trabalha todos os mecanismos fisiológicos como a capacidade respiratória e sistema cardiovascular. Ajuda na prevenção da obesidade infantil, tem um papel fundamental na formação da personalidade e inteligência das crianças. É uma atividade alegre e divertida onde seus pequenos brincam e gastam sua energia, tornando-se grandes campeões e autossuficientes. Nossa piscina infantil é separada da piscina dos adultos, o que facilita o cuidado e orientação dos seus filhos, proporcionando segurança e conforto. Com a metodologia Gustavo Borges, seus filhos aprendem desde a adaptação ao meio líquido, a técnicas dos quatro estilos (crawl – costas – peito – borboleta). Seus benefícios são diversos, tanto no combate da obesidade infantil, timidez, como proporciona, saúde e bem-estar.",
+    "beneficios": {
+      "texto": "A metodologia Gustavo Borges, desenvolve capacidades técnicas da natação, bem como a formação global da criança. Cada nível pedagógico tem seus propósitos e objetivos a serem atingidos, tudo permeado pela ludicidade e contextualização com o mundo da criança. Além de ser uma atividade de baixo impacto sobre as articulações, proporciona equilíbrio muscular, melhora a postura, capacidade aeróbica, flexibilidade muscular e aumenta o gasto de energia, o que contribui para crianças mais saudáveis, calmas, atenciosas e com altos rendimentos escolares."
+    }
+  },
+  "natacao-adulto": {
+    "titulo": "Natação Adulto",
+    "descricao": "Essa modalidade é uma das mais completas, a natação é indicada para todos os tipos de pessoas, independentemente da idade, uma vez que trabalha bastante a parte aeróbica, colaborando para o fortalecimento cardiorrespiratório, o condicionamento físico e para a perda de peso, além de ser uma ótima forma para relaxar e distrair a mente da rotina cotidiana.",
+    "beneficios": {
+      "lista": [
+        "Desenvolve a musculatura",
+        "Ajuda a emagrecer",
+        "Desenvolve a capacidade cardiorrespiratória",
+        "Favorece a memória e a concentração",
+        "Reduz o estresse e a ansiedade"
+      ]
+    }
+  },
+  "hidroginastica": {
+    "titulo": "Hidroginástica",
+    "descricao": "A Hidroginástica é recomendada para todas as idades e biotipos, ótimo para o público da terceira idade e gestantes, pois seus movimentos aeróbicos são de baixo impacto, além de relaxar você ainda irá fortalecer sua musculatura. A hidroginástica também aumenta o metabolismo e pode levar a queima de até 500 calorias por hora, além de ser uma ótima atividade para aliviar o estresse, ansiedade e prevenir doenças.",
+    "beneficios": {
+      "texto": "A prática proporciona o fortalecimento dos ossos ajuda a prevenir doenças cardiovasculares. Preserva as articulações, aumenta a coordenação motora, melhora da flexibilidade, promove o bem-estar, dando aos seus praticantes uma maior qualidade de vida."
+    }
+  },
+  "musculacao": {
+    "titulo": "Musculação",
+    "descricao": "A musculação é uma das atividades mais completas e transformadoras que você pode incorporar à sua rotina de exercícios. Aqui na nossa academia, oferecemos um espaço moderno e equipado com o que há de mais avançado em aparelhos de musculação, permitindo que você trabalhe todos os grupos musculares com eficiência e segurança. Seja você um iniciante buscando tonificar o corpo e melhorar a saúde ou um atleta experiente em busca de performance e força, nossos programas de treinamento personalizados são desenhados para atender a todos os objetivos. A musculação não apenas ajuda a construir uma massa muscular magra, aumentando o metabolismo e promovendo a perda de peso, mas também melhora a postura, aumenta a densidade óssea e reduz o risco de doenças crônicas. Com o apoio de nossa equipe de instrutores altamente qualificados, você receberá orientação passo a passo, garantindo que cada movimento seja realizado com a técnica correta para maximizar os resultados e minimizar o risco de lesões. Venha descobrir o poder da musculação e transforme seu corpo e sua mente conosco.",
+    "beneficios": {
+      "lista": [
+        "Aumento da massa muscular",
+        "Melhora da composição corporal",
+        "Aumento da força e resistência",
+        "Melhora na postura",
+        "Prevenção e controle de doenças crônicas",
+        "Aumento da densidade óssea",
+        "Melhora no metabolismo e na queima de calorias",
+        "Redução do risco de lesões",
+        "Melhora na saúde mental e redução do estresse",
+        "Melhora no sono e na qualidade de vida"
+      ]
+    }
+  },
+  "bike-indoor": {
+    "titulo": "Bike Indoor",
+    "descricao": "A bike indoor é uma atividade revigorante que simula o ciclismo ao ar livre, mas com a conveniência e o conforto de estar em um ambiente controlado. Esta modalidade, altamente energética, é conduzida ao ritmo de músicas motivacionais que ajudam a impulsionar o desempenho, tornando cada sessão uma experiência única e empolgante. Ideal para quem busca melhorar a capacidade cardiovascular, fortalecer os membros inferiores e maximizar a queima de calorias, a bike indoor se adapta a todos os níveis de condicionamento físico, oferecendo desafios personalizados para atender às metas individuais de cada praticante. Além de ser uma excelente forma de aliviar o estresse, esta atividade promove um ambiente de camaradagem e apoio mútuo, onde cada pedalada te leva um passo adiante na jornada para uma vida mais saudável e ativa. Venha descobrir o poder transformador da bike indoor e deixe-se levar pela energia contagiante de nossas aulas, projetadas para elevar seu espírito e resultados a patamares nunca antes alcançados.",
+    "beneficios": {
+      "lista": [
+        "Melhora da Capacidade Cardiovascular: Aumenta a eficiência do coração e dos pulmões",
+        "Queima de Calorias: Alto gasto calórico, auxiliando na perda de peso",
+        "Fortalecimento Muscular: Principalmente nas pernas, glúteos e core",
+        "Baixo Impacto nas Articulações: Ideal para recuperação ou prevenção de lesões",
+        "Flexibilidade de Horários: Pode ser praticada a qualquer hora, independentemente do clima",
+        "Aumento da Endorfina: Melhora o humor e reduz o estresse",
+        "Melhora da Postura: Trabalha músculos importantes para uma boa postura",
+        "Socialização: Aulas em grupo promovem interação social e motivação"
+      ]
+    }
+  },
+  "pilates": {
+    "titulo": "Pilates",
+    "descricao": "Praticar Pilates pode ser considerado um dos melhores exercícios para quem deseja aperfeiçoar a musculatura corporal, evitar doenças cardiovasculares, eliminar o estresse ocasionado pela correria do dia a dia, emagrecer, corrigir a postura, aumentar a flexibilidade, estimular a coordenação motora, prevenir fraturas ocasionadas pela osteoporose, melhorar concentração e amenizar dores. Enfim, uma infinidade de benefícios que, certamente, auxiliarão seu corpo e sua mente.",
+    "beneficios": {
+      "texto": "O Pilates é essencial para a melhoria da saúde. Ele facilita a prevenção de doenças e a reabilitação física, auxilia no desenvolvimento do equilíbrio e coordenação, especialmente para os idosos. Oferece uma forma de exercício excelente e segura para mulheres grávidas, além de contribuir para a recuperação do corpo após o parto."
+    }
+  },
+  "dancas": {
+    "titulo": "Danças",
+    "descricao": "Com tantos estilos diferentes em modalidade de Danças, o exercício vira diversão e nem dá para ver o tempo passar. É possível gastar até 700kcal/hora e ter um corpo modelado e definido. Ao se tratar de uma atividade aeróbica mantém os batimentos cardíacos acelerados e estáveis o que ajuda a queimar as calorias. Um dos muitos benefícios dessa modalidade é diminuir a tensão e relaxar a musculatura. Além disso, a dança estimula a concentração, acalma e tranquiliza, diminuindo a ansiedade acumulada durante o dia a dia.",
+    "beneficios": {
+      "texto": "A dança melhora a autoestima, aumenta a capacidade sanguínea e faz bem ao coração, combate a depressão, pode ser praticado por qualquer pessoa em qualquer idade, ajuda a fazer novos amigos e socializar combatendo também a timidez."
+    }
+  },
+  "jump": {
+    "titulo": "Jump",
+    "descricao": "Uma atividade para o aluno se divertir e de quebra trabalhar a força muscular, fortalecendo e tonificando os glúteos, pernas e abdômen, além de queimar muitas calorias e ainda combater as celulites. As aulas de jump são realizadas em uma mini cama elástica que podem proporcionar além de fácil execução, comprovadamente traz grandes resultados. Uma aula muito divertida, animada com alto gasto calórico, para queimar calorias e enquanto se diverte.",
+    "beneficios": {
+      "texto": "Se o seu objetivo é emagrecer, tonificar, combater celulite, estresse ou desenvolver o sistema cardiorrespiratório, fazer aulas de Jump é a modalidade ideal para o seu objetivo. A prática de jump promove muitos benefícios como na melhora da oxigenação do organismo e também na circulação sanguínea, contribuindo para a redução do acúmulo de tecido adiposo, ou seja, a gordura que provoca a celulite. Este tipo de exercício também auxilia no ganho de equilíbrio corpóreo, similarmente possui um efeito comparável com da drenagem linfática, ao realizá-lo o organismo elimina as toxinas dos tecidos."
+    }
+  },
+  "condicionamento": {
+    "titulo": "Condicionamento Físico",
+    "descricao": "O condicionamento físico foi definido como o ato ou o efeito de condicionar o corpo, tornando-o apto para realização de tarefas motoras específicas, preparo para realizações de esportes, reabilitações, prevenir lesões e até mesmo para tornar as nossas tarefas do dia a dia mais fáceis, seja no trabalho, em casa, com filhos, entre outras do dia a dia. Por isso condicionar para realizações de qualquer atividade, te proporciona segurança, autoconfiança, conforto e aumenta a sua sensação de bem-estar, o que gera uma vida com mais qualidade. O desenvolvimento promove o equilíbrio de todas as capacidades relacionadas à condição física: força, resistência cardiorrespiratória e muscular e flexibilidade.",
+    "beneficios": {
+      "texto": "Seus benefícios estão relacionados com diversos aspectos, um bom programa de condicionamento físico ajuda a prevenir o ganho de peso e a mantê-lo em níveis adequados, aumentam o gasto energético e aceleram o metabolismo, controle da obesidade, já que o gasto calórico proveniente dos exercícios físicos ajuda muito na perda de gordura corporal e melhoram os níveis de aptidão física."
+    }
+  },
+  "funcional-kids": {
+    "titulo": "Funcional Kids",
+    "descricao": "Atuando por meio de movimentos como agachar, empurrar, girar, pular e correr, movimentos que já fazem parte do dia a dia das crianças, o Funcional Kids promove a recreação e exercícios físicos, lúdicos do universo infantil. Fazendo com que essa atividade seja prazerosa para os seus filhos. Combate a obesidade infantil e possui inúmeros benefícios.",
+    "beneficios": {
+      "texto": "A atividade apresenta uma série de benefícios para a saúde dos pequenos. Além do gasto de energia, há desenvolvimento motor e cognitivo, consciência corporal e controle mental. Como consequência ainda há a regulação do sono e do apetite e a ampliação da percepção coletiva. Também existem algumas vantagens a longo prazo: como melhor qualidade de vida e formação de um adulto mais forte e seguro."
+    }
+  },
+  "ginastica-2": {
+    "titulo": "Ginástica",
+    "descricao": "A ginástica é uma boa opção de atividade física, pois ela prepara o corpo, não toma muito tempo, ideal para quem leva uma vida mais corrida. Além disso, ela pode ser uma das atividades menos cansativas, consegue aquecer o corpo, alongar e ainda trabalhar com os músculos e queimar calorias de forma que qualquer pessoa de todas as idades e biotipos podem praticar e seus benefícios são inúmeros.",
+    "beneficios": {
+      "texto": "Reúne uma série de movimentos praticados regularmente para desenvolver flexibilidade e elasticidade no corpo e nos membros. Libera endorfina, conhecida como o hormônio da felicidade e do prazer, a ginástica acaba causando uma sensação de bem-estar e calmaria assim que você começa a praticar. Facilitando a queima de gorduras, aumentando a queima de calorias, dando contorno à silhueta e tonificando a musculatura, previne doenças, pode diminuir o estresse, a ansiedade e também alguns sintomas depressivos e aumenta a autoestima, a autoconfiança e proporciona melhores noites de sono."
+    }
+  },
+  "local": {
+    "titulo": "Localizada",
+    "descricao": "A ginástica localizada é uma ótima opção para conquistar um corpo bonito e bem definido. Além da definição dos músculos, a ginástica localizada proporciona também um bom condicionamento físico. São exercícios que utilizam movimentos repetitivos e focados em determinados grupos musculares. Os exercícios são organizados em séries, separadas por pausas para o descanso dos músculos.",
+    "beneficios": {
+      "texto": "São inúmeros os benefícios da ginástica localizada. Com a média de uma hora, a aula de ginástica localizada gera um elevado gasto de energia, isso faz com que você possa perder até 500 kcal por aula. Mas os benefícios da ginástica localizada não param por aí. O coração e os pulmões trabalham com mais intensidade para poderem bombear oxigênio suficiente para os músculos. Desse modo, esses órgãos ficam mais fortes, o que previne doenças cardiovasculares e respiratórias. Além disso a ginástica localizada exige concentração e foco, que melhoram a coordenação motora, o equilíbrio e a agilidade"
+    }
+  }
+}

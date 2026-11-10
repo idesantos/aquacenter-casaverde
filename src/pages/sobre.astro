@@ -1,0 +1,134 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import foto from '../assets/img/banners/banner_sobre.jpg';
+import { site, sobre, diferenciaisAcademia } from '../data/site';
+---
+<Base title="Sobre a academia" description={`${site.nome}: ${sobre.titulo.toLowerCase()} Desde ${site.desde}, com piscinas aquecidas o ano inteiro, profissionais qualificados e atendimento personalizado.`}>
+  <PageHero titulo={sobre.titulo} eyebrow={`Aquacenter Casa Verde · desde ${site.desde}`} imagem={foto} migalhas={[{ label: 'Aquacenter' }]} />
+
+  <section class="section" data-depth-label="Nossa história">
+    <div class="container hist">
+      <p class="hist__big" data-reveal>{sobre.paragrafos[0]}</p>
+      <p class="lead" data-reveal>{sobre.paragrafos[1]}</p>
+    </div>
+  </section>
+
+  <section class="section missao on-dark" data-depth-label="Missão">
+    <svg class="wave wave--top" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true" data-wave style="--wave-fill: var(--c-deep)"><path d="M0 45 Q 360 0 720 45 T 1440 45 V 90 H 0 Z" /></svg>
+    <div class="container missao__in">
+      <p class="eyebrow light" data-reveal>Nossa missão</p>
+      <blockquote class="h-lg" data-split>{sobre.missao}</blockquote>
+    </div>
+  </section>
+
+  <section class="section" data-depth-label="Valores">
+    <div class="container">
+      <p class="eyebrow" data-reveal>Valores</p>
+      <ul class="valores">
+        {sobre.valores.map((v, i) => <li data-reveal><span>{String(i + 1).padStart(2, '0')}</span>{v}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section difs" data-depth-label="Diferenciais">
+    <div class="container">
+      <p class="eyebrow" data-reveal>Diferenciais</p>
+      <h2 class="h-lg" data-split>O que faz da Aquacenter uma academia diferente.</h2>
+      <ul class="difs__grid">
+        {diferenciaisAcademia.map((d) => <li data-reveal><Icon name="check" /> {d}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .hist {
+    display: grid;
+    gap: 28px;
+    max-width: 1000px;
+  }
+  .hist__big {
+    font: 500 clamp(24px, 2.4vw, 36px) / 1.38 var(--f-display);
+    letter-spacing: -0.02em;
+  }
+  .missao {
+    margin-top: clamp(40px, 5vw, 70px);
+    background: linear-gradient(180deg, var(--c-deep), var(--c-navy));
+  }
+  .missao__in {
+    display: grid;
+    gap: 22px;
+    max-width: 1100px;
+  }
+  .missao blockquote {
+    margin: 0;
+    font-size: clamp(32px, 4.4vw, 64px);
+  }
+  .valores {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .valores li {
+    display: grid;
+    gap: 14px;
+    padding: 28px 24px;
+    border-radius: var(--r-md);
+    background: #fff;
+    box-shadow: var(--shadow-1);
+    font: 700 22px/1.2 var(--f-display);
+    letter-spacing: -0.015em;
+  }
+  .valores span {
+    font-size: 14px;
+    color: var(--c-brand);
+  }
+  .difs {
+    background: var(--c-mist);
+  }
+  .difs h2 {
+    margin: 14px 0 36px;
+    max-width: 20ch;
+  }
+  .difs__grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 12px;
+  }
+  .difs__grid li {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 20px;
+    border-radius: 16px;
+    background: #fff;
+    font-weight: 600;
+  }
+  .difs__grid :global(svg) {
+    flex: none;
+    width: 24px;
+    height: 24px;
+    padding: 3px;
+    border-radius: 50%;
+    background: var(--c-aqua);
+    color: #fff;
+  }
+  @media (max-width: 900px) {
+    .valores {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 520px) {
+    .valores {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,379 @@
+---
+import Base from '../layouts/Base.astro';
+import HomeHero from '../components/HomeHero.astro';
+import ModalidadesRail from '../components/ModalidadesRail.astro';
+import Journey from '../components/Journey.astro';
+import Schedule from '../components/Schedule.astro';
+import PlanosGrid from '../components/PlanosGrid.astro';
+import VisitBlock from '../components/VisitBlock.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import { site, convenios, whatsappLink } from '../data/site';
+import { url } from '../lib/url';
+
+const numeros = [
+  { valor: 1991, de: 1960, rotulo: 'ano de fundação: mais de 30 anos de experiência' },
+  { valor: 2, rotulo: 'piscinas aquecidas o ano inteiro: adulto e infantil' },
+  { valor: 2, rotulo: 'professores por piscina' },
+  { valor: 50, sufixo: '+', rotulo: 'armários nos vestiários adultos' },
+];
+const extras = [
+  { icone: 'car', texto: 'Estacionamento com manobrista' },
+  { icone: 'medal', texto: 'Metodologia Gustavo Borges' },
+  { icone: 'wave', texto: 'Pé-direito alto no espaço da piscina' },
+  { icone: 'users', texto: 'Vestiário infantil e duchas aquecidas' },
+] as const;
+---
+<Base description="Natação para bebês, crianças e adultos, hidroginástica, musculação, pilates e mais. Piscinas aquecidas o ano inteiro na Casa Verde, desde 1991. Agende sua aula experimental grátis.">
+  <HomeHero />
+
+  <!-- A academia em números (continua o mergulho do hero) -->
+  <section class="section deep on-dark" id="numeros" data-depth-label="A academia">
+    <div class="deep__bubbles" aria-hidden="true">{Array.from({ length: 18 }, (_, i) => <span style={`--x:${(i * 53) % 100}%;--s:${6 + ((i * 11) % 18)}px;--d:${(i * 1.3) % 9}s;--t:${8 + ((i * 5) % 7)}s`} />)}</div>
+    <div class="container">
+      <div class="deep__intro">
+        <p class="eyebrow light" data-reveal>Desde {site.desde}</p>
+        <h2 class="h-lg" data-split>Piscinas aquecidas e atendimento personalizado para todas as idades.</h2>
+        <p class="lead" data-reveal>{site.descricao}</p>
+        <a class="link-arrow" href={url('/sobre/')} data-reveal>Conheça a Aquacenter <Icon name="arrow" /></a>
+      </div>
+      <dl class="stats">
+        {numeros.map((n) => (
+          <div class="stat" data-reveal>
+            <dt class="sr-only">{n.rotulo}</dt>
+            <dd class="stat__val"><span data-count={n.valor} data-count-from={n.de ?? 0}>{n.valor}</span>{n.sufixo}</dd>
+            <dd class="stat__label">{n.rotulo}</dd>
+          </div>
+        ))}
+      </dl>
+      <ul class="perks">
+        {extras.map((e) => <li data-reveal><Icon name={e.icone} /> {e.texto}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Modalidades -->
+  <section class="mods" id="modalidades" data-rail-section data-depth-label="Modalidades">
+    <svg class="wave wave--top" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true" data-wave><path d="M0 45 Q 360 0 720 45 T 1440 45 V 90 H 0 Z" /></svg>
+    <div class="container mods__head">
+      <div>
+        <p class="eyebrow" data-reveal>12 modalidades</p>
+        <h2 class="h-lg" data-split>Na água ou fora dela, tem aula para cada fase da vida.</h2>
+      </div>
+      <p class="lead" data-reveal>Natação para bebês, crianças e adultos, hidroginástica e uma academia completa com musculação, pilates, bike indoor e aulas coletivas.</p>
+    </div>
+    <ModalidadesRail pin />
+  </section>
+
+  <!-- Jornada do Nadador -->
+  <section class="section journey-sec on-dark" id="metodologia" data-depth-label="Metodologia" data-depth-hide>
+    <svg class="wave wave--top" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true" data-wave style="--wave-fill: var(--c-navy)"><path d="M0 45 Q 360 0 720 45 T 1440 45 V 90 H 0 Z" /></svg>
+    <div class="journey-sec__light" aria-hidden="true"></div>
+    <div class="container">
+      <div class="journey-sec__head">
+        <p class="eyebrow light" data-reveal>Metodologia Gustavo Borges</p>
+        <h2 class="h-lg" data-split>A jornada do nadador: da Estrela do mar ao Golfinho.</h2>
+        <p class="lead" data-reveal>Cada nível tem um mascote e objetivos claros. Quando a criança muda de nível na avaliação dos professores, recebe um certificado e passa a usar a touca do novo nível.</p>
+      </div>
+      <Journey />
+      <div class="journey-sec__foot" data-reveal>
+        <a class="btn btn--ghost" href={url('/metodo/')}>Conheça a metodologia completa <Icon name="arrow" /></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Horários -->
+  <section class="section" id="horarios" data-depth-label="Horários">
+    <svg class="wave wave--top" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true" data-wave><path d="M0 45 Q 360 0 720 45 T 1440 45 V 90 H 0 Z" /></svg>
+    <div class="container split">
+      <div class="split__text">
+        <p class="eyebrow" data-reveal>Horários</p>
+        <h2 class="h-lg" data-split>Encontre a sua turma.</h2>
+        <p class="lead" data-reveal>Aberto de segunda a sábado. Chame no WhatsApp e a gente indica a turma e o horário certos para você.</p>
+        <a class="link-arrow" href={url('/horarios/')} data-reveal>Ver funcionamento e horários <Icon name="arrow" /></a>
+      </div>
+      <div data-reveal>
+        <Schedule compact />
+      </div>
+    </div>
+  </section>
+
+  <!-- Planos -->
+  <section class="section planos-sec" id="planos" data-depth-label="Planos">
+    <div class="container">
+      <div class="planos-sec__head">
+        <p class="eyebrow" data-reveal>Matrícula</p>
+        <h2 class="h-lg" data-split>Faça sua matrícula.</h2>
+        <p class="lead" data-reveal>Escolha o plano e fale com a gente pelo WhatsApp para conhecer valores e condições.</p>
+      </div>
+      <PlanosGrid />
+    </div>
+  </section>
+
+  <!-- Convênios -->
+  <section class="section conv" id="convenios" data-depth-label="Convênios">
+    <div class="container conv__box" data-reveal>
+      <div>
+        <p class="eyebrow light">Convênios</p>
+        <h2 class="h-md">Descontos especiais para grupos.</h2>
+        <p>{convenios.texto}</p>
+        <ul class="conv__chips">{convenios.publicos.map((p) => <li>{p}</li>)}</ul>
+      </div>
+      <div class="conv__actions">
+        <a class="btn btn--accent" href={whatsappLink('Olá! Gostaria de informações sobre convênios para grupos.')} target="_blank" rel="noopener" data-track="whatsapp"><Icon name="whatsapp" /> Falar no WhatsApp</a>
+        {site.email && <a class="btn btn--ghost" href={`mailto:${site.email}?subject=Convênio`}><Icon name="mail" /> {site.email}</a>}
+      </div>
+    </div>
+  </section>
+
+  <!-- Visita -->
+  <section class="section" id="visite" data-depth-label="Localização">
+    <div class="container">
+      <VisitBlock />
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .deep {
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--c-deep) 0%, var(--c-navy) 100%);
+    padding-bottom: calc(var(--section-y) + 40px);
+  }
+  .deep__bubbles span,
+  .journey-sec__light {
+    pointer-events: none;
+  }
+  .deep__bubbles span {
+    position: absolute;
+    left: var(--x);
+    bottom: -30px;
+    width: var(--s);
+    height: var(--s);
+    border-radius: 50%;
+    border: 1.5px solid rgb(255 255 255 / 30%);
+    background: radial-gradient(circle at 30% 30%, rgb(255 255 255 / 45%), transparent 45%);
+    animation: rise var(--t) linear var(--d) infinite;
+  }
+  @keyframes rise {
+    to {
+      transform: translate(30px, -110vh);
+      opacity: 0;
+    }
+  }
+  .deep__intro {
+    position: relative;
+    display: grid;
+    gap: 22px;
+    max-width: 860px;
+  }
+  .deep__intro .lead {
+    max-width: 62ch;
+  }
+  .stats {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin: clamp(48px, 7vw, 90px) 0 0;
+  }
+  .stat {
+    padding: 28px 24px;
+    border-radius: var(--r-md);
+    background: rgb(255 255 255 / 6%);
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 12%);
+    backdrop-filter: blur(6px);
+  }
+  .stat dd {
+    margin: 0;
+  }
+  .stat__val {
+    font: 700 clamp(48px, 5.4vw, 80px) / 1 var(--f-display);
+    letter-spacing: -0.04em;
+    color: var(--c-sky);
+    font-variant-numeric: tabular-nums;
+  }
+  .stat__label {
+    margin-top: 10px;
+    color: rgb(255 255 255 / 75%);
+    font-size: 15px;
+    line-height: 1.4;
+  }
+  .perks {
+    position: relative;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 28px;
+    margin-top: 36px;
+    font-weight: 600;
+    color: rgb(255 255 255 / 85%);
+  }
+  .perks li {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .perks :global(svg) {
+    width: 22px;
+    height: 22px;
+    color: var(--c-sky);
+  }
+
+  .mods {
+    position: relative;
+    padding-top: clamp(70px, 8vw, 110px);
+    padding-bottom: clamp(30px, 4vw, 50px);
+    background: var(--c-foam);
+  }
+  .mods__head {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    align-items: end;
+    gap: 24px 60px;
+    margin-bottom: clamp(28px, 3vw, 44px);
+  }
+  .mods__head .h-lg {
+    margin-top: 14px;
+  }
+  /* Desktop: a seção fica fixa na tela enquanto os cards correm; cabe tudo em 100svh. */
+  @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+    .mods {
+      height: 100svh;
+      min-height: 640px;
+      display: flex;
+      flex-direction: column;
+      padding-top: calc(var(--header-h) + 20px);
+      padding-bottom: 24px;
+    }
+    .mods__head {
+      margin-bottom: 22px;
+    }
+    .mods__head .h-lg {
+      font-size: clamp(34px, 3.5vw, 56px);
+    }
+  }
+
+  .journey-sec {
+    margin-top: clamp(50px, 6vw, 90px);
+    background: linear-gradient(180deg, var(--c-navy), var(--c-abyss));
+    overflow: hidden;
+  }
+  .journey-sec__light {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(40% 30% at 20% 10%, rgb(25 181 220 / 25%), transparent 70%),
+      radial-gradient(30% 25% at 85% 40%, rgb(25 181 220 / 14%), transparent 70%);
+  }
+  .journey-sec__head {
+    position: relative;
+    display: grid;
+    gap: 20px;
+    max-width: 820px;
+    margin: 0 auto clamp(48px, 6vw, 80px);
+    text-align: center;
+    justify-items: center;
+  }
+  .journey-sec__foot {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-top: clamp(40px, 5vw, 70px);
+  }
+  .journey-sec__foot .btn {
+    color: #fff;
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: clamp(32px, 5vw, 80px);
+    align-items: start;
+  }
+  .split__text {
+    position: sticky;
+    top: calc(var(--header-h) + 30px);
+    display: grid;
+    gap: 20px;
+  }
+
+  .planos-sec {
+    background: var(--c-mist);
+  }
+  .planos-sec__head {
+    display: grid;
+    gap: 16px;
+    max-width: 720px;
+    margin-bottom: clamp(32px, 4vw, 56px);
+  }
+
+  .conv {
+    padding-block: 0;
+    background: linear-gradient(var(--c-mist) 50%, var(--c-foam) 50%);
+  }
+  .conv__box {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 32px 60px;
+    align-items: center;
+    padding: clamp(32px, 5vw, 64px);
+    border-radius: var(--r-lg);
+    color: #fff;
+    background:
+      radial-gradient(70% 120% at 100% 100%, rgb(25 181 220 / 45%), transparent 60%),
+      var(--c-navy);
+  }
+  .conv__box h2 {
+    margin: 12px 0 14px;
+  }
+  .conv__box p:not(.eyebrow) {
+    color: rgb(255 255 255 / 80%);
+  }
+  .conv__chips {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+  }
+  .conv__chips li {
+    padding: 7px 14px;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 10%);
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .conv__actions {
+    display: grid;
+    gap: 12px;
+  }
+  .conv__actions .btn {
+    color: #fff;
+    word-break: break-all;
+  }
+
+  @media (max-width: 1000px) {
+    .stats {
+      grid-template-columns: 1fr 1fr;
+    }
+    .mods__head,
+    .split,
+    .conv__box {
+      grid-template-columns: 1fr;
+    }
+    .split__text {
+      position: static;
+    }
+  }
+  @media (max-width: 480px) {
+    .stat {
+      padding: 22px 18px;
+    }
+    .conv__actions .btn {
+      font-size: 14px;
+    }
+  }
+</style>

@@ -1,0 +1,180 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import VisitBlock from '../components/VisitBlock.astro';
+import Icon from '../components/Icon.astro';
+import { site, whatsappLink } from '../data/site';
+import { modalidades } from '../data/modalidades';
+---
+<Base title="Contato" description="Fale com a Aquacenter Casa Verde: (11) 3966-8331, WhatsApp (11) 94867-5274, Rua Bernardino Fanganiello, 201 – Casa Verde, São Paulo/SP. Agende sua aula experimental grátis.">
+  <PageHero titulo="Aguardamos seu contato!" eyebrow="Contato" lead="Mande uma mensagem pelo WhatsApp, ligue ou venha nos visitar na Rua Bernardino Fanganiello, 201." migalhas={[{ label: 'Contato' }]} />
+
+  <section class="section" data-depth-label="Fale conosco">
+    <div class="container ct">
+      <form class="form" data-wa-form data-reveal>
+        <p class="eyebrow">Mensagem rápida</p>
+        <h2 class="h-md">Envie pelo WhatsApp</h2>
+        <p class="form__hint">Preencha e a conversa abre no WhatsApp com a mensagem pronta.</p>
+        <label>Nome<input name="nome" required autocomplete="name" /></label>
+        <label>Telefone<input name="telefone" type="tel" autocomplete="tel" inputmode="tel" /></label>
+        <label>Interesse
+          <select name="interesse">
+            <option value="">Escolha uma modalidade</option>
+            {modalidades.map((m) => <option>{m.nome}</option>)}
+            <option>Convênios</option>
+            <option>Outro assunto</option>
+          </select>
+        </label>
+        <label>Mensagem<textarea name="mensagem" rows="4"></textarea></label>
+        <button class="btn btn--accent" type="submit" data-track="whatsapp"><Icon name="whatsapp" /> Enviar pelo WhatsApp</button>
+      </form>
+
+      <div class="ct__cards">
+        <a class="ct__card" href={whatsappLink()} target="_blank" rel="noopener" data-track="whatsapp" data-reveal><Icon name="whatsapp" /><span>WhatsApp</span><strong>{site.whatsapp.exibicao}</strong></a>
+        <a class="ct__card" href={site.telefone.link} data-track="telefone" data-reveal><Icon name="phone" /><span>Telefone</span><strong>{site.telefone.exibicao}</strong></a>
+        {site.email && <a class="ct__card" href={`mailto:${site.email}`} data-reveal><Icon name="mail" /><span>E-mail</span><strong class="ct__mail">{site.email}</strong></a>}
+        <div class="ct__social" data-reveal>
+          <a href={site.instagram} target="_blank" rel="noopener"><Icon name="instagram" /> Instagram</a>
+          <a href={site.facebook} target="_blank" rel="noopener"><Icon name="facebook" /> Facebook</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0" data-depth-label="Localização">
+    <div class="container"><VisitBlock /></div>
+  </section>
+</Base>
+
+<style>
+  .ct {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: clamp(24px, 4vw, 56px);
+    align-items: start;
+  }
+  .form {
+    display: grid;
+    gap: 16px;
+    padding: clamp(24px, 3.5vw, 44px);
+    border-radius: var(--r-lg);
+    background: #fff;
+    box-shadow: var(--shadow-2);
+  }
+  .form__hint {
+    margin-top: -6px;
+    color: var(--c-muted);
+  }
+  .form label {
+    display: grid;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .form input,
+  .form select,
+  .form textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid var(--c-line);
+    border-radius: 14px;
+    background: var(--c-foam);
+    color: var(--c-ink);
+    font: 500 16px var(--f-body);
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .form input:focus,
+  .form select:focus,
+  .form textarea:focus {
+    outline: none;
+    border-color: var(--c-brand);
+    box-shadow: 0 0 0 4px rgb(0 142 203 / 15%);
+  }
+  .form .btn {
+    justify-self: start;
+    margin-top: 6px;
+  }
+  .ct__cards {
+    display: grid;
+    gap: 14px;
+  }
+  .ct__card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 16px;
+    align-items: center;
+    padding: 22px 24px;
+    border-radius: var(--r-md);
+    background: #fff;
+    box-shadow: var(--shadow-1);
+    text-decoration: none;
+    transition: transform 0.4s var(--ease-out), box-shadow 0.4s;
+  }
+  .ct__card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-2);
+  }
+  .ct__card :global(svg) {
+    grid-row: span 2;
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    border-radius: 50%;
+    background: var(--c-mist);
+    color: var(--c-brand);
+  }
+  .ct__card span {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--c-muted);
+  }
+  .ct__card strong {
+    font: 700 22px/1.2 var(--f-display);
+  }
+  .ct__mail {
+    font-size: 17px !important;
+    word-break: break-all;
+  }
+  .ct__social {
+    display: flex;
+    gap: 12px;
+  }
+  .ct__social a {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 16px;
+    border-radius: 16px;
+    background: var(--c-navy);
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .ct__social :global(svg) {
+    width: 20px;
+  }
+  @media (max-width: 900px) {
+    .ct {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  import { whatsappLink } from '../data/site';
+  const form = document.querySelector<HTMLFormElement>('[data-wa-form]');
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const d = new FormData(form);
+    const linhas = [
+      `Olá! Meu nome é ${d.get('nome')}.`,
+      d.get('interesse') ? `Tenho interesse em: ${d.get('interesse')}.` : '',
+      d.get('mensagem') ? String(d.get('mensagem')) : '',
+      d.get('telefone') ? `Meu telefone: ${d.get('telefone')}` : '',
+    ].filter(Boolean);
+    window.open(whatsappLink(linhas.join('\n')), '_blank', 'noopener');
+  });
+</script>

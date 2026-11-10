@@ -1,0 +1,227 @@
+---
+import { Image } from 'astro:assets';
+import { niveis } from '../data/metodo';
+import { url } from '../lib/url';
+
+type Props = { detalhado?: boolean };
+const { detalhado = false } = Astro.props;
+---
+<ol class="journey" data-journey>
+  <span class="journey__line" aria-hidden="true"><span data-journey-fill></span></span>
+  {niveis.map((n, i) => (
+    <li class:list={['jstep', { 'jstep--flip': i % 2 === 0 }]} id={detalhado ? n.id : undefined} data-jstep>
+      <span class="jstep__depth" aria-hidden="true">{((i + 1) * 0.4).toFixed(1).replace('.', ',')} m</span>
+      <div class="jstep__mascot">
+        <Image src={n.imagem} alt={`Mascote ${n.mascote}`} widths={[240, 420]} sizes="210px" loading="lazy" />
+      </div>
+      <div class="jstep__card">
+        <p class="jstep__meta"><span>{n.nivel}</span> {n.faixa}</p>
+        <h3 class="jstep__title">{n.mascote}</h3>
+        <p class="jstep__learn">{n.aprende}</p>
+        {detalhado ? (
+          <details class="jstep__more">
+            <summary>Objetivos do nível</summary>
+            <p>{n.objetivos}</p>
+          </details>
+        ) : (
+          <a class="link-arrow" href={url(`/metodo/#${n.id}`)}>Ver objetivos <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        )}
+      </div>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .journey {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 20px 0;
+    display: grid;
+    gap: clamp(40px, 6vw, 80px);
+  }
+  .journey__line {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    translate: -1px 0;
+    background: repeating-linear-gradient(rgb(255 255 255 / 25%) 0 6px, transparent 6px 14px);
+  }
+  .journey__line span {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(var(--c-sky), var(--c-aqua));
+    transform-origin: top;
+    transform: scaleY(0);
+    box-shadow: 0 0 18px var(--c-aqua);
+  }
+  .jstep {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: clamp(40px, 8vw, 120px);
+    scroll-margin-top: 120px;
+  }
+  .jstep__depth {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    z-index: 1;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: var(--c-navy);
+    box-shadow: 0 0 0 2px rgb(127 220 242 / 45%);
+    color: var(--c-sky);
+    font: 800 12px/1 var(--f-body);
+    white-space: nowrap;
+  }
+  .jstep__mascot {
+    justify-self: end;
+    width: clamp(130px, 16vw, 210px);
+    filter: drop-shadow(0 20px 30px rgb(0 0 0 / 30%));
+    animation: bob 5s ease-in-out infinite;
+    animation-delay: calc(var(--i, 0) * -0.7s);
+  }
+  .jstep__mascot img {
+    width: 100%;
+    height: auto;
+  }
+  .jstep--flip .jstep__mascot {
+    order: 2;
+    justify-self: start;
+  }
+  .jstep--flip .jstep__card {
+    order: 1;
+    text-align: right;
+    justify-self: end;
+  }
+  .jstep__card {
+    max-width: 420px;
+  }
+  .jstep__meta {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 14px;
+    font-weight: 700;
+    color: rgb(255 255 255 / 70%);
+  }
+  .jstep--flip .jstep__meta {
+    justify-content: flex-end;
+  }
+  .jstep__meta span {
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--c-aqua);
+    color: var(--c-abyss);
+    font-weight: 800;
+  }
+  .jstep__title {
+    margin-top: 12px;
+    font-size: clamp(34px, 4vw, 54px);
+  }
+  .jstep__learn {
+    margin-top: 10px;
+    font-size: 18px;
+    color: rgb(255 255 255 / 82%);
+  }
+  .jstep .link-arrow {
+    margin-top: 14px;
+  }
+  .jstep__more {
+    margin-top: 14px;
+    text-align: left;
+    border-radius: var(--r-sm);
+    background: rgb(255 255 255 / 7%);
+    padding: 12px 16px;
+  }
+  .jstep__more summary {
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--c-sky);
+  }
+  .jstep__more p {
+    margin-top: 10px;
+    font-size: 15px;
+    color: rgb(255 255 255 / 80%);
+  }
+  @keyframes bob {
+    0%,
+    100% {
+      transform: translateY(0) rotate(-2deg);
+    }
+    50% {
+      transform: translateY(-14px) rotate(2deg);
+    }
+  }
+
+  @media (max-width: 760px) {
+    .journey__line {
+      left: 22px;
+    }
+    .jstep,
+    .jstep--flip {
+      grid-template-columns: 1fr;
+      gap: 12px;
+      padding-left: 62px;
+    }
+    .jstep__depth {
+      left: 22px;
+      top: 22px;
+    }
+    .jstep .jstep__mascot,
+    .jstep--flip .jstep__mascot {
+      order: 0;
+      justify-self: start;
+      width: 130px;
+    }
+    .jstep--flip .jstep__card {
+      order: 1;
+      text-align: left;
+      justify-self: start;
+    }
+    .jstep--flip .jstep__meta {
+      justify-content: flex-start;
+    }
+  }
+</style>
+
+<script>
+  import { gsap, reduced } from '../scripts/motion';
+
+  document.querySelectorAll<HTMLElement>('[data-journey]').forEach((j) => {
+    const fill = j.querySelector<HTMLElement>('[data-journey-fill]')!;
+    j.querySelectorAll<HTMLElement>('[data-jstep]').forEach((s, i) => s.style.setProperty('--i', String(i)));
+    if (reduced) return void gsap.set(fill, { scaleY: 1 });
+    gsap.to(fill, {
+      scaleY: 1,
+      ease: 'none',
+      scrollTrigger: { trigger: j, start: 'top 60%', end: 'bottom 60%', scrub: 0.5 },
+    });
+    j.querySelectorAll<HTMLElement>('[data-jstep]').forEach((s) => {
+      const mascot = s.querySelector('.jstep__mascot');
+      const card = s.querySelector('.jstep__card');
+      gsap.from(mascot, {
+        scale: 0.4,
+        y: 80,
+        opacity: 0,
+        duration: 1.2,
+        ease: 'back.out(1.6)',
+        scrollTrigger: { trigger: s, start: 'top 82%', once: true },
+      });
+      gsap.from(card, {
+        y: 40,
+        opacity: 0,
+        duration: 1,
+        ease: 'expo.out',
+        delay: 0.1,
+        scrollTrigger: { trigger: s, start: 'top 82%', once: true },
+      });
+    });
+  });
+</script>

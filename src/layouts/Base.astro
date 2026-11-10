@@ -1,0 +1,194 @@
+---
+import '../styles/global.css';
+import { getImage } from 'astro:assets';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Icon from '../components/Icon.astro';
+import ogFoto from '../assets/img/banners/banner_natacao_adulto.jpg';
+import { site, whatsappLink } from '../data/site';
+import { STAGING } from '../lib/url';
+
+type Props = { title?: string; description: string; image?: ImageMetadata };
+const { title, description, image } = Astro.props;
+const fullTitle = title ? `${title} | ${site.nome}` : `${site.nome} | Natação, hidroginástica e academia na Zona Norte de SP`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const og = await getImage({ src: image ?? ogFoto, width: 1200, height: 630, fit: 'cover', format: 'jpg' });
+const ogUrl = new URL(og.src, Astro.site);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ExerciseGym',
+  name: site.nome,
+  url: new URL(import.meta.env.BASE_URL, Astro.site).href,
+  image: ogUrl.href,
+  telephone: site.telefone.link.replace('tel:', ''),
+  ...(site.email && { email: site.email }),
+  foundingDate: String(site.desde),
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.endereco.rua,
+    addressLocality: site.endereco.cidade,
+    addressRegion: site.endereco.uf,
+    postalCode: site.endereco.cep,
+    addressCountry: 'BR',
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: site.endereco.lat, longitude: site.endereco.lng },
+  openingHoursSpecification: [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '06:30', closes: '22:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: 'Saturday', opens: '08:00', closes: '12:00' },
+  ],
+  sameAs: [site.instagram, site.facebook],
+};
+---
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    {STAGING ? <meta name="robots" content="noindex, nofollow" /> : <link rel="canonical" href={canonical} />}
+    <meta name="theme-color" content="#05457a" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content={site.nome} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} type="image/svg+xml" />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body id="top">
+    <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+    <Header />
+    <main id="conteudo">
+      <slot />
+    </main>
+    <Footer />
+
+    <nav class="mbar" aria-label="Ações rápidas" data-mbar>
+      <a href={whatsappLink()} target="_blank" rel="noopener" class="mbar__main" data-track="whatsapp"><Icon name="whatsapp" /> Aula grátis</a>
+      <a href={site.telefone.link} data-track="telefone"><Icon name="phone" /> Ligar</a>
+      <a href={site.mapsRota} target="_blank" rel="noopener" data-track="rota"><Icon name="pin" /> Rota</a>
+    </nav>
+
+    <div class="depth" aria-hidden="true" data-depth>
+      <span class="depth__val" data-depth-val>0,0 m</span>
+      <span class="depth__track"><span class="depth__fill" data-depth-fill></span></span>
+      <span class="depth__label" data-depth-label-out></span>
+    </div>
+
+    <script>
+      import '../scripts/motion';
+    </script>
+
+    <style>
+      .mbar {
+        position: fixed;
+        left: 12px;
+        right: 12px;
+        bottom: max(12px, env(safe-area-inset-bottom));
+        z-index: 40;
+        display: none;
+        grid-template-columns: 1.5fr 1fr 1fr;
+        gap: 6px;
+        padding: 6px;
+        border-radius: 22px;
+        background: rgb(4 26 51 / 88%);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        box-shadow: 0 18px 40px -12px rgb(4 26 51 / 60%);
+        transform: translateY(140%);
+        transition: transform 0.5s var(--ease-out);
+      }
+      .mbar.is-on {
+        transform: none;
+      }
+      .mbar a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        min-height: 50px;
+        border-radius: 16px;
+        color: #fff;
+        font-weight: 700;
+        font-size: 14px;
+        text-decoration: none;
+        background: rgb(255 255 255 / 8%);
+      }
+      .mbar a :global(svg) {
+        width: 18px;
+        height: 18px;
+      }
+      .mbar .mbar__main {
+        background: var(--c-accent);
+      }
+      @media (max-width: 760px) {
+        .mbar {
+          display: grid;
+        }
+      }
+
+      .depth {
+        position: fixed;
+        right: 22px;
+        top: 50%;
+        z-index: 30;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        translate: 0 -50%;
+        padding: 14px 8px;
+        border-radius: 999px;
+        color: var(--c-deep);
+        background: rgb(255 255 255 / 72%);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: var(--shadow-1);
+        font: 800 11px/1 var(--f-body);
+        letter-spacing: 0.04em;
+        opacity: 0;
+        transition: opacity 0.5s;
+        pointer-events: none;
+      }
+      .depth.is-on {
+        opacity: 1;
+      }
+      .depth__track {
+        position: relative;
+        width: 2px;
+        height: 160px;
+        background: repeating-linear-gradient(rgb(5 69 122 / 35%) 0 1px, transparent 1px 16px);
+      }
+      .depth__fill {
+        position: absolute;
+        inset: 0 auto auto 0;
+        width: 2px;
+        height: 100%;
+        background: currentColor;
+        transform-origin: top;
+        transform: scaleY(0);
+      }
+      .depth__label {
+        writing-mode: vertical-rl;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        font-size: 10px;
+        max-height: 150px;
+        overflow: hidden;
+      }
+      @media (min-width: 1200px) {
+        .depth {
+          display: flex;
+        }
+      }
+    </style>
+  </body>
+</html>

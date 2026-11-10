@@ -1,0 +1,422 @@
+---
+import Icon from './Icon.astro';
+import { grades, turnoDe, diasEfetivos, type Grade } from '../data/horarios';
+import { funcionamento, whatsappLink } from '../data/site';
+import { modalidades } from '../data/modalidades';
+
+type Props = { ids?: string[]; compact?: boolean; status?: boolean };
+const { ids, compact = false, status = true } = Astro.props;
+const lista: Grade[] = ids ? grades.filter((g) => ids.includes(g.id)) : grades;
+const uid = `sch-${Math.random().toString(36).slice(2, 7)}`;
+const turnos = ['Manhã', 'Tarde', 'Noite'] as const;
+---
+<div class:list={['sch', { 'sch--compact': compact }]} data-schedule data-funcionamento={JSON.stringify(funcionamento.porDia)}>
+  {status && (
+    <div class="sch__status" data-open-status>
+      <span class="sch__dot"></span>
+      <span data-open-text>Funcionamento: seg a sex 06:30–22:00 · sáb 08:00–12:00</span>
+    </div>
+  )}
+
+  {lista.length > 1 && (
+    <div class="sch__tabs" role="tablist" aria-label="Escolha a modalidade">
+      {lista.map((g, i) => (
+        <button role="tab" id={`${uid}-tab-${g.id}`} aria-controls={`${uid}-${g.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} data-tab>
+          {g.titulo}
+        </button>
+      ))}
+    </div>
+  )}
+
+  {lista.map((g, i) => (
+    <div class="sch__panel" role={lista.length > 1 ? 'tabpanel' : undefined} id={`${uid}-${g.id}`} aria-labelledby={lista.length > 1 ? `${uid}-tab-${g.id}` : undefined} hidden={i !== 0} data-panel>
+      <div class="sch__head">
+        <h3 class="sch__title">{g.titulo}</h3>
+        {g.publico && <span class="chip">{g.publico}</span>}
+      </div>
+
+      {g.faixa && (
+        <ul class="sch__range">
+          {g.faixa.map((f) => (
+            <li><Icon name="clock" /><span>{f.texto}</span><strong>{f.inicio} às {f.fim}</strong></li>
+          ))}
+        </ul>
+      )}
+
+      {g.aulas && g.aulas.some((a) => a.diasTexto) ? (
+        <table class="sch__table">
+          <thead><tr><th scope="col">Horário</th>{g.aulas.some((a) => a.turma) && <th scope="col">Turma</th>}<th scope="col">Dias</th></tr></thead>
+          <tbody>
+            {g.aulas.map((a) => (
+              <tr data-slot={a.hora} data-days={JSON.stringify(diasEfetivos(a))}>
+                <td><strong>{a.hora.replace(/^0/, '')}</strong></td>
+                {g.aulas!.some((x) => x.turma) && <td>{a.turma}</td>}
+                <td>{a.diasTexto}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : g.aulas && (
+        <div class="sch__cols">
+          {turnos.map((t) => {
+            const doTurno = g.aulas!.filter((a) => turnoDe(a.hora) === t);
+            return doTurno.length > 0 && (
+              <div class="sch__col">
+                <p class="sch__turno">{t}</p>
+                <ul>
+                  {doTurno.map((a) => (
+                    <li data-slot={a.hora} data-days={JSON.stringify(diasEfetivos(a))}>{a.hora.replace(/^0/, '')}</li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {g.observacoes?.map((o) => <p class="sch__note">{o}</p>)}
+    </div>
+  ))}
+
+  {lista.length === 0 && compact && (
+    <div class="sch__empty">
+      <ul class="sch__range">
+        {funcionamento.linhas.map((l) => <li><Icon name="clock" /><span>{l.dias}</span><strong>{l.horario}</strong></li>)}
+      </ul>
+      <p class="sch__muted">Os horários das turmas de cada modalidade são passados pelo WhatsApp.</p>
+      <a class="btn btn--accent" href={whatsappLink('Olá! Gostaria de saber os horários das turmas.')} target="_blank" rel="noopener" data-track="whatsapp"><Icon name="whatsapp" /> Consultar horários</a>
+    </div>
+  )}
+
+  {lista.length === 0 && !compact && (
+    <div class="sch__empty">
+      <h3 class="sch__title">Horários das turmas</h3>
+      <p class="sch__muted">Escolha a modalidade e chame no WhatsApp: a gente indica a turma e o horário certos para você.</p>
+      <ul class="sch__mods">
+        {modalidades.map((m) => (
+          <li>
+            <span>{m.nome}</span>
+            <a href={whatsappLink(`Olá! Quais são os horários de ${m.nome}?`)} target="_blank" rel="noopener" data-track="whatsapp"><Icon name="whatsapp" /> Consultar</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )}
+</div>
+
+<style>
+  .sch__empty {
+    margin-top: 20px;
+    display: grid;
+    gap: 16px;
+    justify-items: start;
+  }
+  .sch__mods {
+    list-style: none;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0 28px;
+  }
+  .sch__mods li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--c-line);
+    font-weight: 600;
+  }
+  .sch__mods a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--c-brand);
+    font-weight: 700;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+  .sch__mods :global(svg) {
+    width: 16px;
+  }
+  @media (max-width: 640px) {
+    .sch__mods {
+      grid-template-columns: 1fr;
+    }
+  }
+  .sch {
+    --panel: #fff;
+    border-radius: var(--r-lg);
+    background: var(--panel);
+    box-shadow: var(--shadow-2);
+    padding: clamp(20px, 3vw, 40px);
+  }
+  .sch__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: var(--c-mist);
+    color: var(--c-deep);
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .sch__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #9aa9b5;
+  }
+  .sch__status.is-open .sch__dot {
+    background: #1fbf6a;
+    box-shadow: 0 0 0 0 rgb(31 191 106 / 60%);
+    animation: pulse 1.8s infinite;
+  }
+  @keyframes pulse {
+    to {
+      box-shadow: 0 0 0 10px rgb(31 191 106 / 0%);
+    }
+  }
+  .sch__tabs {
+    display: flex;
+    gap: 6px;
+    margin-top: 22px;
+    padding: 5px;
+    border-radius: 999px;
+    background: var(--c-mist);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .sch__tabs::-webkit-scrollbar {
+    display: none;
+  }
+  .sch__tabs button {
+    flex: none;
+    padding: 10px 16px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--c-muted);
+    font: 700 14px/1 var(--f-body);
+    cursor: pointer;
+    transition:
+      background 0.3s,
+      color 0.3s;
+  }
+  .sch__tabs button[aria-selected='true'] {
+    background: #fff;
+    color: var(--c-ink);
+    box-shadow: var(--shadow-1);
+  }
+  .sch__panel {
+    margin-top: 26px;
+    animation: fadein 0.5s var(--ease-out);
+  }
+  @keyframes fadein {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+  .sch__head {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .sch__title {
+    font: 700 clamp(22px, 2vw, 28px) / 1.1 var(--f-display);
+    letter-spacing: -0.02em;
+  }
+  .sch__cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 20px;
+  }
+  .sch__turno {
+    margin-bottom: 10px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--c-brand);
+  }
+  .sch__col ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .sch__col li {
+    min-width: 70px;
+    padding: 9px 10px;
+    border-radius: 12px;
+    background: var(--c-foam);
+    box-shadow: inset 0 0 0 1px var(--c-line);
+    text-align: center;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .sch__table {
+    width: 100%;
+    margin-top: 18px;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+  }
+  .sch__table th {
+    padding: 8px 10px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--c-brand);
+    border-bottom: 2px solid var(--c-line);
+  }
+  .sch__table td {
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--c-line);
+  }
+  .is-next {
+    position: relative;
+  }
+  .sch__col li.is-next {
+    background: var(--c-accent);
+    color: #fff;
+    box-shadow: 0 8px 20px -8px rgb(255 106 26 / 80%);
+  }
+  .sch__table tr.is-next td {
+    background: #fff1e8;
+  }
+  .sch__table tr.is-next td:first-child strong::after {
+    content: 'próxima';
+    margin-left: 8px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--c-accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+    vertical-align: 2px;
+  }
+  .sch__range {
+    list-style: none;
+    margin-top: 18px;
+    display: grid;
+    gap: 10px;
+  }
+  .sch__range li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    background: var(--c-foam);
+  }
+  .sch__range :global(svg) {
+    width: 20px;
+    color: var(--c-brand);
+  }
+  .sch__range strong {
+    margin-left: auto;
+  }
+  .sch__note {
+    margin-top: 18px;
+    padding: 12px 16px;
+    border-radius: 14px;
+    background: #fff6e5;
+    color: #7a4a00;
+    font-size: 15px;
+  }
+  .sch__muted {
+    color: var(--c-muted);
+    font-size: 15px;
+  }
+  @media (max-width: 640px) {
+    .sch__cols {
+      grid-template-columns: 1fr;
+    }
+    .sch__col li {
+      min-width: 64px;
+    }
+  }
+</style>
+
+<script>
+  // Hora de São Paulo, independente do fuso de quem acessa.
+  function agoraSP() {
+    const parts = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/Sao_Paulo',
+      weekday: 'short',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    }).formatToParts(new Date());
+    const get = (t: string) => parts.find((p) => p.type === t)?.value ?? '0';
+    const dia = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(get('weekday'));
+    return { dia, min: (Number(get('hour')) % 24) * 60 + Number(get('minute')) };
+  }
+  const toMin = (h: string) => {
+    const [a, b] = h.split(':').map(Number);
+    return a * 60 + b;
+  };
+  const fmt = (m: number) => `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
+
+  document.querySelectorAll<HTMLElement>('[data-schedule]').forEach((root) => {
+    // Abas acessíveis
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[data-tab]')];
+    const panels = [...root.querySelectorAll<HTMLElement>('[data-panel]')];
+    const select = (i: number) => {
+      tabs.forEach((t, k) => {
+        t.setAttribute('aria-selected', String(k === i));
+        t.tabIndex = k === i ? 0 : -1;
+      });
+      panels.forEach((p, k) => (p.hidden = k !== i));
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(i));
+      t.addEventListener('keydown', (e) => {
+        const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (!d) return;
+        const n = (i + d + tabs.length) % tabs.length;
+        select(n);
+        tabs[n].focus();
+      });
+    });
+
+    // Aberto agora + próximo horário de cada grade
+    const { dia, min } = agoraSP();
+    const porDia = JSON.parse(root.dataset.funcionamento || '{}') as Record<string, [number, number] | null>;
+    const hoje = porDia[dia];
+    const status = root.querySelector<HTMLElement>('[data-open-status]');
+    const text = root.querySelector<HTMLElement>('[data-open-text]');
+    if (status && text) {
+      if (hoje && min >= hoje[0] && min < hoje[1]) {
+        status.classList.add('is-open');
+        text.textContent = `Aberto agora · fecha às ${fmt(hoje[1])}`;
+      } else {
+        let d = dia;
+        let prox = null as [number, number] | null;
+        for (let k = 0; k < 7; k++) {
+          const cand = porDia[(dia + k) % 7];
+          if (cand && (k > 0 || min < cand[0])) {
+            prox = cand;
+            d = (dia + k) % 7;
+            break;
+          }
+        }
+        const nome = d === dia ? 'hoje' : d === (dia + 1) % 7 ? 'amanhã' : ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'][d];
+        text.textContent = prox ? `Fechado agora · abre ${nome} às ${fmt(prox[0])}` : 'Fechado agora';
+      }
+    }
+    panels.forEach((p) => {
+      const slots = [...p.querySelectorAll<HTMLElement>('[data-slot]')]
+        .filter((s) => (JSON.parse(s.dataset.days || '[]') as number[]).includes(dia))
+        .filter((s) => toMin(s.dataset.slot!) > min)
+        .sort((a, b) => toMin(a.dataset.slot!) - toMin(b.dataset.slot!));
+      slots[0]?.classList.add('is-next');
+    });
+  });
+</script>

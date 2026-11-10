@@ -1,0 +1,74 @@
+---
+import Icon from './Icon.astro';
+import { whatsappLink, site } from '../data/site';
+type Props = { titulo?: string; texto?: string; mensagem?: string };
+const {
+  titulo = 'Agende sua aula experimental grátis',
+  texto = 'Fale com a gente pelo WhatsApp e escolha o melhor dia e horário.',
+  mensagem,
+} = Astro.props;
+---
+<section class="cta on-dark" data-depth-label="Aula grátis">
+  <div class="cta__bubbles" aria-hidden="true">{Array.from({ length: 14 }, (_, i) => <span style={`--x:${(i * 37) % 100}%;--s:${8 + ((i * 13) % 22)}px;--d:${(i * 0.9) % 7}s;--t:${6 + ((i * 7) % 6)}s`} />)}</div>
+  <div class="container cta__in">
+    <h2 class="h-lg" data-split>{titulo}</h2>
+    <p class="lead" data-reveal>{texto}</p>
+    <div class="cta__actions" data-reveal>
+      <a class="btn btn--accent" href={whatsappLink(mensagem)} target="_blank" rel="noopener" data-track="whatsapp"><Icon name="whatsapp" /> Chamar no WhatsApp</a>
+      <a class="btn btn--ghost" href={site.telefone.link} data-track="telefone"><Icon name="phone" /> {site.telefone.exibicao}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    position: relative;
+    overflow: hidden;
+    margin: clamp(60px, 8vw, 110px) var(--gutter) 0;
+    border-radius: clamp(28px, 4vw, 48px);
+    padding: clamp(60px, 9vw, 120px) 0;
+    background:
+      radial-gradient(80% 120% at 85% 0%, rgb(25 181 220 / 55%), transparent 60%),
+      linear-gradient(160deg, var(--c-brand), var(--c-deep) 55%, var(--c-navy));
+    text-align: center;
+  }
+  .cta__in {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 20px;
+  }
+  .cta h2 {
+    max-width: 16ch;
+  }
+  .cta .lead {
+    max-width: 46ch;
+  }
+  .cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 10px;
+  }
+  .cta__actions .btn {
+    color: #fff;
+  }
+  .cta__bubbles span {
+    position: absolute;
+    left: var(--x);
+    bottom: -40px;
+    width: var(--s);
+    height: var(--s);
+    border-radius: 50%;
+    border: 1.5px solid rgb(255 255 255 / 40%);
+    background: radial-gradient(circle at 30% 30%, rgb(255 255 255 / 50%), transparent 45%);
+    animation: rise var(--t) linear var(--d) infinite;
+  }
+  @keyframes rise {
+    to {
+      transform: translate(20px, -700px);
+      opacity: 0;
+    }
+  }
+</style>
