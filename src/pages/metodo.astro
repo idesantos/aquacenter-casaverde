@@ -8,14 +8,15 @@ import foto from '../assets/img/banners/banner_natacao_adulto.jpg';
 import { metodo, citacaoMetodo } from '../data/metodo';
 import { url } from '../lib/url';
 ---
-<Base title="Metodologia de natação" description="Metodologia Gustavo Borges na Aquacenter: aprendizagem por aproximações sucessivas, 7 níveis infantis com mascotes (Estrela do mar a Golfinho), avaliação periódica e níveis para adultos." image={foto}>
-  <PageHero titulo="A jornada do nadador" eyebrow="Metodologia Gustavo Borges" lead={citacaoMetodo} imagem={foto} migalhas={[{ label: 'Metodologia' }]} />
+<Base title="Metodologia de natação" description="Metodologia Aquativa, a metodologia própria de natação da Aquacenter: aprendizagem por aproximações sucessivas, 7 níveis infantis com mascotes (Estrela do mar a Golfinho), avaliação periódica e níveis para adultos." image={foto}>
+  <PageHero titulo="A jornada do nadador" eyebrow="Metodologia Aquativa" lead={citacaoMetodo} imagem={foto} migalhas={[{ label: 'Metodologia' }]} />
 
   <section class="section" data-depth-label="Método de ensino">
     <div class="container ensino">
       <div>
         <p class="eyebrow" data-reveal>Método de ensino</p>
         <h2 class="h-lg" data-split>{metodo.ensino.titulo}.</h2>
+        <p class="lead ensino__lead" data-reveal>A Aquativa é a metodologia própria de natação da Aquacenter, validada há mais de 20 anos no mercado. Ela acompanha a criança do primeiro contato com a água, ainda bebê, até o domínio dos quatro estilos.</p>
       </div>
       <div class="ensino__cards">
         <article data-reveal><p class="t">Objetivo</p><p>{metodo.ensino.objetivo}</p></article>

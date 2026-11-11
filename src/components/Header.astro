@@ -15,7 +15,6 @@ const links = [
   { href: '/metodo/', label: 'Metodologia' },
   { href: '/horarios/', label: 'Horários' },
   { href: '/planos/', label: 'Planos' },
-  { href: '/convenios/', label: 'Convênios' },
   { href: '/contato/', label: 'Contato' },
 ];
 const modAtiva = modalidades.some((m) => path === url(`/${m.slug}/`));
@@ -182,7 +181,8 @@ const modAtiva = modalidades.some((m) => path === url(`/${m.slug}/`));
     position: absolute;
     top: calc(100% + 10px);
     left: 50%;
-    width: min(720px, 90vw);
+    width: max-content;
+    max-width: 90vw;
     translate: -50% 0;
     opacity: 0;
     visibility: hidden;
@@ -207,17 +207,13 @@ const modAtiva = modalidades.some((m) => path === url(`/${m.slug}/`));
   }
   .mega__in {
     display: grid;
-    grid-template-columns: 1fr 1.6fr 1fr;
-    gap: 24px;
+    grid-template-columns: repeat(3, auto);
+    gap: 40px;
     padding: 26px 28px;
     border-radius: var(--r-md);
     background: #fff;
     color: var(--c-ink);
     box-shadow: var(--shadow-2);
-  }
-  .mega__col:nth-child(2) ul {
-    columns: 2;
-    column-gap: 16px;
   }
   .mega__title {
     margin-bottom: 8px;

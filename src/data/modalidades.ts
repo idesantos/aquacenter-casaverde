@@ -5,11 +5,8 @@ import natacaoInfantil from '../assets/img/modalidades/natacao-infantil.jpg';
 import natacaoAdulto from '../assets/img/modalidades/natacao-adulto.jpg';
 import hidroginastica from '../assets/img/modalidades/hidroginastica.jpg';
 import musculacao from '../assets/img/modalidades/musculacao.jpg';
-import bikeIndoor from '../assets/img/modalidades/bike-indoor.jpg';
-import pilates from '../assets/img/modalidades/pilates.jpg';
 import danca from '../assets/img/modalidades/danca.jpg';
 import jump from '../assets/img/modalidades/jump.jpg';
-import condicionamento from '../assets/img/modalidades/condicionamento.jpg';
 import funcionalKids from '../assets/img/modalidades/funcional-kids.jpg';
 import ginastica from '../assets/img/modalidades/ginastica.jpg';
 import localizada from '../assets/img/modalidades/ginastica-localizada.jpg';
@@ -22,28 +19,33 @@ type Conteudo = {
   beneficios: { lista?: string[]; texto?: string };
 };
 
+// Aulas que existem dentro de uma modalidade (as aulas coletivas da Ginástica).
+export type Aula = { id: string; nome: string; texto: string; imagem: ImageMetadata };
+
 export type Modalidade = Conteudo & {
   slug: string;
   nome: string;
   resumo: string;
-  categorias: Categoria[];
+  // Cada modalidade fica em uma categoria só, para não aparecer repetida no menu.
+  categorias: [Categoria];
   imagem: ImageMetadata;
   diferenciais: string[];
+  aulas?: Aula[];
 };
 
 const DIF = {
   aguaKids: [
-    'Metodologia Gustavo Borges',
+    'Metodologia Aquativa',
     'Piscina infantil exclusiva, separada da piscina dos adultos',
     'Número limitado de crianças por professor',
-    'Avaliação periódica do nível dos alunos',
+    'Avaliação periódica do nível das crianças',
     'Vestiário infantil',
+    'Duchas aquecidas',
     'Estacionamento com manobrista',
   ],
   aguaAdulto: [
     'Piscinas aquecidas o ano inteiro',
     '2 professores por piscina',
-    'Avaliação periódica do nível dos alunos',
     'Duchas aquecidas',
     'Vestiários adultos com mais de 50 armários',
     'Estacionamento com manobrista',
@@ -67,8 +69,8 @@ const meta: Omit<Modalidade, keyof Conteudo>[] = [
   {
     slug: 'natacao-bebe-infantil',
     nome: 'Natação Bebê e Infantil',
-    resumo: 'Da adaptação ao meio líquido aos quatro estilos, com a Metodologia Gustavo Borges.',
-    categorias: ['agua', 'kids'],
+    resumo: 'Da adaptação ao meio líquido aos quatro estilos, com a Metodologia Aquativa.',
+    categorias: ['agua'],
     imagem: natacaoInfantil,
     diferenciais: DIF.aguaKids,
   },
@@ -97,44 +99,32 @@ const meta: Omit<Modalidade, keyof Conteudo>[] = [
     diferenciais: DIF.academia,
   },
   {
-    slug: 'bike-indoor',
-    nome: 'Bike Indoor',
-    resumo: 'Pedalada em grupo ao ritmo de músicas motivacionais.',
+    slug: 'ginastica-2',
+    nome: 'Ginástica',
+    resumo: 'Aulas coletivas de ginástica, localizada, danças e jump. Para todas as idades.',
     categorias: ['academia'],
-    imagem: bikeIndoor,
+    imagem: ginastica,
     diferenciais: DIF.academia,
-  },
-  {
-    slug: 'pilates',
-    nome: 'Pilates',
-    resumo: '3 alunos por aula, em ambiente climatizado.',
-    categorias: ['academia'],
-    imagem: pilates,
-    diferenciais: ['3 alunos por aula, maximizando resultados', 'Ambiente climatizado', ...DIF.academia.slice(2)],
-  },
-  {
-    slug: 'dancas',
-    nome: 'Danças',
-    resumo: 'Exercício que vira diversão: até 700 kcal por hora.',
-    categorias: ['academia'],
-    imagem: danca,
-    diferenciais: DIF.academia,
-  },
-  {
-    slug: 'jump',
-    nome: 'Jump',
-    resumo: 'Mini cama elástica, aula animada e alto gasto calórico.',
-    categorias: ['academia'],
-    imagem: jump,
-    diferenciais: DIF.academia,
-  },
-  {
-    slug: 'condicionamento',
-    nome: 'Condicionamento Físico',
-    resumo: 'Força, resistência e flexibilidade para o dia a dia.',
-    categorias: ['academia'],
-    imagem: condicionamento,
-    diferenciais: DIF.academia,
+    aulas: [
+      {
+        id: 'localizada',
+        nome: 'Ginástica Localizada',
+        texto: 'Exercícios com movimentos repetitivos, focados em determinados grupos musculares e organizados em séries com pausas para o descanso. Define os músculos, melhora o condicionamento físico e pode gastar até 500 kcal por aula.',
+        imagem: localizada,
+      },
+      {
+        id: 'dancas',
+        nome: 'Danças',
+        texto: 'Com tantos estilos diferentes, o exercício vira diversão e nem dá para ver o tempo passar. É uma atividade aeróbica que pode gastar até 700 kcal por hora, diminui a tensão e ajuda a fazer novos amigos.',
+        imagem: danca,
+      },
+      {
+        id: 'jump',
+        nome: 'Jump',
+        texto: 'Aula animada numa mini cama elástica, de fácil execução e alto gasto calórico. Fortalece e tonifica glúteos, pernas e abdômen.',
+        imagem: jump,
+      },
+    ],
   },
   {
     slug: 'funcional-kids',
@@ -143,22 +133,6 @@ const meta: Omit<Modalidade, keyof Conteudo>[] = [
     categorias: ['kids'],
     imagem: funcionalKids,
     diferenciais: DIF.kids,
-  },
-  {
-    slug: 'ginastica-2',
-    nome: 'Ginástica',
-    resumo: 'Aquece, alonga e tonifica em pouco tempo. Para todas as idades.',
-    categorias: ['academia'],
-    imagem: ginastica,
-    diferenciais: DIF.academia,
-  },
-  {
-    slug: 'local',
-    nome: 'Ginástica Localizada',
-    resumo: 'Músculos definidos e até 500 kcal por aula.',
-    categorias: ['academia'],
-    imagem: localizada,
-    diferenciais: DIF.academia,
   },
 ];
 

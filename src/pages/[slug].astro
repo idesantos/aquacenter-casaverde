@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import Schedule from '../components/Schedule.astro';
@@ -43,6 +44,27 @@ const primeiraFrase = m.descricao.split(/(?<=\.)\s/)[0];
     </div>
   </section>
 
+  {m.aulas && (
+    <section class="section" id="aulas" data-depth-label="Aulas">
+      <div class="container">
+        <p class="eyebrow" data-reveal>Aulas coletivas</p>
+        <h2 class="h-lg aulas__title" data-split>Escolha a sua aula.</h2>
+        <div class="aulas">
+          {m.aulas.map((a) => (
+            <article class="aula" id={a.id} data-reveal>
+              <Image src={a.imagem} alt="" widths={[420, 840]} sizes="(max-width: 900px) 100vw, 33vw" class="aula__img" />
+              <div class="aula__body">
+                <h3 class="aula__t">{a.nome}</h3>
+                <p>{a.texto}</p>
+                <a class="link-arrow" href={whatsappLink(mensagemModalidade(a.nome))} target="_blank" rel="noopener" data-track="whatsapp">Agendar aula experimental <Icon name="arrow" /></a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
   <section class="section bens" data-depth-label="Benefícios">
     <svg class="wave wave--top" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true" data-wave style="--wave-fill: var(--c-mist)"><path d="M0 45 Q 360 0 720 45 T 1440 45 V 90 H 0 Z" /></svg>
     <div class="container">
@@ -71,7 +93,7 @@ const primeiraFrase = m.descricao.split(/(?<=\.)\s/)[0];
     <section class="section" data-depth-label="Metodologia">
       <div class="container metodo-teaser" data-reveal>
         <div>
-          <p class="eyebrow">Metodologia Gustavo Borges</p>
+          <p class="eyebrow">Metodologia Aquativa</p>
           <h2 class="h-md">7 níveis, 7 mascotes.</h2>
           <p class="lead">Da Estrela do mar (bebês) ao Golfinho: cada fase tem objetivos claros e avaliação periódica dos professores.</p>
           <a class="link-arrow" href={url('/metodo/')}>Conheça a jornada do nadador <Icon name="arrow" /></a>
@@ -136,6 +158,54 @@ const primeiraFrase = m.descricao.split(/(?<=\.)\s/)[0];
 </Base>
 
 <style>
+  .aulas__title {
+    margin-bottom: clamp(24px, 4vw, 44px);
+  }
+  .aulas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(16px, 2vw, 28px);
+  }
+  .aula {
+    scroll-margin-top: calc(var(--header-h) + 24px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: var(--r-lg);
+    background: #fff;
+    box-shadow: var(--shadow-2);
+  }
+  .aula__img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    height: auto;
+    object-fit: cover;
+  }
+  .aula__body {
+    display: grid;
+    gap: 12px;
+    align-content: start;
+    flex: 1;
+    padding: clamp(20px, 2.4vw, 28px);
+  }
+  .aula__body .link-arrow {
+    align-self: end;
+    margin-top: 4px;
+  }
+  .aula__t {
+    font-family: var(--f-display);
+    font-size: clamp(20px, 2vw, 24px);
+    line-height: 1.15;
+    color: var(--c-navy);
+  }
+  .aula__body p {
+    color: var(--c-muted);
+  }
+  @media (max-width: 900px) {
+    .aulas {
+      grid-template-columns: 1fr;
+    }
+  }
   .mhero__ctas {
     display: flex;
     flex-wrap: wrap;

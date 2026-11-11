@@ -19,6 +19,13 @@ const antigas = {
   '/tubarao/': '/metodo/#tubarao',
   '/golfinho/': '/metodo/#golfinho',
   '/freepass/': '/contato/',
+  '/convenios/': '/contato/',
+  '/condicionamento/': '/musculacao/',
+  '/local/': '/ginastica-2/#localizada',
+  '/dancas/': '/ginastica-2/#dancas',
+  '/jump/': '/ginastica-2/#jump',
+  '/pilates/': '/#modalidades',
+  '/bike-indoor/': '/#modalidades',
   '/black-friday/': '/planos/',
 };
 

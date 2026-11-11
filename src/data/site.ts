@@ -49,6 +49,8 @@ export const funcionamento = {
 export const MSG_AULA_GRATIS =
   'Olá! Gostaria de mais informação sobre dias e horários disponíveis para minha aula grátis';
 
+export const MSG_INFO_ACADEMIA = 'Olá! Gostaria de mais informações da academia.';
+
 export function whatsappLink(mensagem: string = MSG_AULA_GRATIS) {
   return `https://api.whatsapp.com/send?phone=${site.whatsapp.numero}&text=${encodeURIComponent(mensagem)}`;
 }
@@ -56,7 +58,7 @@ export function whatsappLink(mensagem: string = MSG_AULA_GRATIS) {
 export const diferenciaisAcademia = [
   'Know-how de mais de 30 anos no mercado',
   'Estacionamento com manobrista',
-  'Metodologia Gustavo Borges',
+  'Metodologia Aquativa, própria e validada há mais de 20 anos',
   'Espaço da piscina com pé-direito alto, proporcionando amplitude e conforto',
   'Duas piscinas, uma para adultos e outra para crianças',
   '2 professores por piscina',
@@ -87,9 +89,3 @@ export const planos = [
   { nome: 'Natação infantil', destaque: '2x na semana', publico: 'Infantil' },
   { nome: 'Natação bebê', destaque: 'Horários livres', publico: 'Bebê' },
 ];
-
-export const convenios = {
-  texto:
-    'Oferecemos descontos especiais para grupo de empresas, condomínios e colégios em alguns horários específicos. Transporte ida e volta com perua escolar credenciada. Forme seu grupo e seja um dos nossos parceiros.',
-  publicos: ['Empresas', 'Condomínios', 'Colégios'],
-};
