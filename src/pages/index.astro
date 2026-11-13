@@ -12,17 +12,18 @@ import { site, whatsappLink, MSG_INFO_ACADEMIA } from '../data/site';
 import { modalidades } from '../data/modalidades';
 import { url } from '../lib/url';
 
-const numeros = [
+type Numero = { rotulo: string; valor?: number; de?: number; sufixo?: string; icone?: 'users' | 'medal' };
+const numeros: Numero[] = [
   { valor: 1991, de: 1960, rotulo: 'ano de fundação: mais de 30 anos de experiência' },
   { valor: 2, rotulo: 'piscinas aquecidas o ano inteiro: adulto e infantil' },
-  { valor: 2, rotulo: 'professores por piscina' },
-  { valor: 50, sufixo: '+', rotulo: 'armários nos vestiários adultos' },
+  { icone: 'users', rotulo: 'limite de alunos por professor' },
+  { icone: 'medal', rotulo: 'professores especializados' },
 ];
 const extras = [
-  { icone: 'car', texto: 'Estacionamento com manobrista' },
+  { icone: 'car', texto: '3 estacionamentos: 2 gratuitos colados na academia e 1 conveniado' },
   { icone: 'medal', texto: 'Metodologia Aquativa' },
   { icone: 'wave', texto: 'Pé-direito alto no espaço da piscina' },
-  { icone: 'users', texto: 'Vestiário infantil e duchas aquecidas' },
+  { icone: 'users', texto: 'Vestiário infantil e musculação climatizada' },
 ] as const;
 ---
 <Base description="Natação para bebês, crianças e adultos, hidroginástica, musculação e ginástica. Piscinas aquecidas o ano inteiro na Casa Verde, desde 1991. Agende sua aula experimental grátis.">
@@ -41,9 +42,13 @@ const extras = [
       <dl class="stats">
         {numeros.map((n) => (
           <div class="stat" data-reveal>
-            <dt class="sr-only">{n.rotulo}</dt>
-            <dd class="stat__val"><span data-count={n.valor} data-count-from={n.de ?? 0}>{n.valor}</span>{n.sufixo}</dd>
-            <dd class="stat__label">{n.rotulo}</dd>
+            <dt class="sr-only">{n.valor !== undefined ? `${n.valor}${n.sufixo ?? ''} ` : ''}{n.rotulo}</dt>
+            {n.icone ? (
+              <dd class="stat__val stat__val--icon" aria-hidden="true"><Icon name={n.icone} /></dd>
+            ) : (
+              <dd class="stat__val" aria-hidden="true"><span data-count={n.valor} data-count-from={n.de ?? 0}>{n.valor}</span>{n.sufixo}</dd>
+            )}
+            <dd class="stat__label" aria-hidden="true">{n.rotulo}</dd>
           </div>
         ))}
       </dl>
@@ -194,6 +199,11 @@ const extras = [
     letter-spacing: -0.04em;
     color: var(--c-sky);
     font-variant-numeric: tabular-nums;
+  }
+  .stat__val--icon :global(svg) {
+    display: block;
+    width: 1em;
+    height: 1em;
   }
   .stat__label {
     margin-top: 10px;

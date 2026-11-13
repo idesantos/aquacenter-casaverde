@@ -27,6 +27,8 @@ const antigas = {
   '/pilates/': '/#modalidades',
   '/bike-indoor/': '/#modalidades',
   '/black-friday/': '/planos/',
+  // Bebê e Infantil viraram duas páginas em 13/11/2026.
+  '/natacao-bebe-infantil/': '/natacao-infantil/',
 };
 
 // Sobras do WordPress que só existem no servidor antigo: viram 301 no .htaccess.

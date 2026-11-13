@@ -1,6 +1,13 @@
 {
-  "natacao-bebe-infantil": {
-    "titulo": "Natação Bebê / Infantil",
+  "natacao-bebe": {
+    "titulo": "Natação Bebê",
+    "descricao": "A natação para bebês acontece com a presença de um acompanhante na água, em clima de brincadeira e muita segurança. As aulas trabalham a ambientação e a adaptação ao meio líquido, a sociabilização, o equilíbrio, os mergulhos e a sobrevivência. Nossa piscina infantil é separada da piscina dos adultos, o que facilita o cuidado e a orientação dos pequenos, proporcionando segurança e conforto. Com a Metodologia Aquativa, o bebê dá os primeiros passos na água e depois segue para os níveis da natação infantil.",
+    "beneficios": {
+      "texto": "Desde cedo, a natação contribui para o desenvolvimento motor, psíquico e social e trabalha a capacidade respiratória e o sistema cardiovascular. Nesta fase, o bebê aprende o bloqueio da respiração, os movimentos de pernas, os saltos, a imersão e os deslocamentos, sempre com o acompanhante por perto."
+    }
+  },
+  "natacao-infantil": {
+    "titulo": "Natação Infantil",
     "descricao": "Uma atividade excelente no desenvolvimento motor, psíquico e social, sendo um esporte completo, pois trabalha todos os mecanismos fisiológicos como a capacidade respiratória e sistema cardiovascular. Ajuda na prevenção da obesidade infantil, tem um papel fundamental na formação da personalidade e inteligência das crianças. É uma atividade alegre e divertida onde seus pequenos brincam e gastam sua energia, tornando-se grandes campeões e autossuficientes. Nossa piscina infantil é separada da piscina dos adultos, o que facilita o cuidado e orientação dos seus filhos, proporcionando segurança e conforto. Com a Metodologia Aquativa, seus filhos aprendem desde a adaptação ao meio líquido, a técnicas dos quatro estilos (crawl – costas – peito – borboleta). Seus benefícios são diversos, tanto no combate da obesidade infantil, timidez, como proporciona, saúde e bem-estar.",
     "beneficios": {
       "texto": "A Metodologia Aquativa desenvolve capacidades técnicas da natação, bem como a formação global da criança. Cada nível pedagógico tem seus propósitos e objetivos a serem atingidos, tudo permeado pela ludicidade e contextualização com o mundo da criança. Além de ser uma atividade de baixo impacto sobre as articulações, proporciona equilíbrio muscular, melhora a postura, capacidade aeróbica, flexibilidade muscular e aumenta o gasto de energia, o que contribui para crianças mais saudáveis, calmas, atenciosas e com altos rendimentos escolares."

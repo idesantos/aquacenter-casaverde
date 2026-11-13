@@ -7,15 +7,15 @@ import leaoMarinho from '../assets/img/mascotes/leao-marinho.png';
 import tubarao from '../assets/img/mascotes/tubarao.png';
 import golfinho from '../assets/img/mascotes/golfinho.png';
 
-// Faixas etárias conforme a página "Método" do site antigo. As páginas individuais
-// dos níveis traziam faixas diferentes para os bebês (6–30 e 31–42 meses) —
-// pendente de confirmação com a academia.
+// Só os níveis de bebê mostram faixa etária (pedido da academia em 10/11/2026).
+// As faixas dos bebês vêm da página "Método" do site antigo; as páginas individuais
+// dos níveis traziam outras (6–30 e 31–42 meses) — pendente de confirmação.
 
 export type Nivel = {
   id: string; // slug da página antiga — vira âncora em /metodo/
   mascote: string;
   nivel: string;
-  faixa: string;
+  faixa?: string;
   aprende: string;
   objetivos: string;
   imagem: ImageMetadata;
@@ -53,7 +53,6 @@ export const niveis: Nivel[] = [
     id: 'polvo',
     mascote: 'Polvo',
     nivel: 'Adaptação',
-    faixa: '4 a 5 anos',
     aprende: 'Flutuação, respiração e primeiras braçadas',
     objetivos:
       'Ambientação, sociabilização, controle da respiração, sobrevivência. Nesta fase deverão apresentar: sustentação 10” (manter o corpo na vertical sem afundar), pegar objetos no fundo da piscina, flutuação dorsal, ventral e grupada, deslize frontal e dorsal, propulsão de perna crawl, braçada crawl, respiração lateral, iniciação ao mergulho, submersão. Fase onde irá desenvolver o gosto pela atividade na água, em clima de muita motivação, atividades lúdicas e recreativas.',
@@ -63,7 +62,6 @@ export const niveis: Nivel[] = [
     id: 'peixe',
     mascote: 'Peixe',
     nivel: 'Iniciação',
-    faixa: '6 e 7 anos',
     aprende: 'Crawl completo e nado costas',
     objetivos: BASE_15,
     imagem: peixe,
@@ -72,7 +70,6 @@ export const niveis: Nivel[] = [
     id: 'leaomarinho',
     mascote: 'Leão-marinho',
     nivel: 'Aprendizagem',
-    faixa: '8 a 10 anos',
     aprende: 'Nado peito completo',
     objetivos: `${BASE_15} ${PEITO}.`,
     imagem: leaoMarinho,
@@ -81,7 +78,6 @@ export const niveis: Nivel[] = [
     id: 'tubarao',
     mascote: 'Tubarão',
     nivel: 'Aperfeiçoamento I',
-    faixa: '11 a 12 anos',
     aprende: 'Viradas e nado borboleta',
     objetivos: `${BASE_15} ${PEITO}${VIRADAS}.`,
     imagem: tubarao,
@@ -90,7 +86,6 @@ export const niveis: Nivel[] = [
     id: 'golfinho',
     mascote: 'Golfinho',
     nivel: 'Aperfeiçoamento II',
-    faixa: '13 a 14 anos',
     aprende: 'Os 4 estilos, viradas olímpicas e medley',
     objetivos:
       'Aperfeiçoamento dos 4 estilos de nados, saída/chegada e viradas olímpicas dos 4 estilos, sequência do estilo medley e do revezamento, resistência global e participação em eventos esportivos.',
@@ -151,31 +146,31 @@ export const metodo = {
   ],
   faixas: [
     {
-      idade: '6 a 36 meses',
-      texto: 'Espera-se que os alunos nesta faixa etária desenvolvam adaptação ao meio líquido – bloqueio da respiração, movimentos de pernas, saltos, imersão e deslocamentos.',
+      fase: 'Bebê 1 · 6 a 36 meses',
+      texto: 'Espera-se que os alunos nesta fase desenvolvam adaptação ao meio líquido – bloqueio da respiração, movimentos de pernas, saltos, imersão e deslocamentos.',
     },
     {
-      idade: '37 a 48 meses',
+      fase: 'Bebê 2 · 37 a 48 meses',
       texto: 'Adaptação ao meio líquido, respiração geral, flutuação ventral e dorsal, propulsão das pernas, braçada do estilo crawl e costas, mergulho elementar. Desenvolver o gosto pela atividade na água, com aulas em clima de muita motivação, atividades lúdicas e recreativas.',
     },
     {
-      idade: '4 a 5 anos',
-      texto: 'Continuidade das atividades anteriores, ou início para os alunos que iniciam nesta faixa etária. Propulsão das pernas, braços, respiração específica para o estilo peito, além da continuidade dos estilos crawl e costas, mergulho elementar. Podemos também ministrar exercícios de pernada de golfinho nesta fase.',
+      fase: 'Adaptação · Polvo',
+      texto: 'Continuidade das atividades anteriores, ou início para os alunos que começam nesta fase. Propulsão das pernas, braços, respiração específica para o estilo peito, além da continuidade dos estilos crawl e costas, mergulho elementar. Podemos também ministrar exercícios de pernada de golfinho nesta fase.',
     },
     {
-      idade: '6 a 7 anos',
-      texto: 'Continuidade das atividades anteriores ou início para os alunos que começam a partir desta faixa etária. Mergulho elementar, aprendizagem do estilo golfinho, viradas simples, aperfeiçoamento dos estilos, detalhes técnicos – introdução à competição. 1ª fase: festival interno do clube ou da escola – todos ganham prêmios. 2ª fase: competição ou festival com uma ou mais escolas do mesmo nível.',
+      fase: 'Iniciação · Peixe',
+      texto: 'Continuidade das atividades anteriores ou início para os alunos que começam a partir desta fase. Mergulho elementar, aprendizagem do estilo golfinho, viradas simples, aperfeiçoamento dos estilos, detalhes técnicos – introdução à competição. 1ª fase: festival interno do clube ou da escola – todos ganham prêmios. 2ª fase: competição ou festival com uma ou mais escolas do mesmo nível.',
     },
     {
-      idade: '8 a 10 anos',
+      fase: 'Aprendizagem · Leão-marinho',
       texto: 'Continuidade das atividades anteriores, dando maior ênfase a detalhes técnicos, iniciação e continuidade competitiva, ou o gosto pela natação, principalmente para os que não gostam de competir.',
     },
     {
-      idade: '11 a 14 anos',
+      fase: 'Aperfeiçoamento · Tubarão e Golfinho',
       texto: 'Aprimoramento técnico e principalmente do condicionamento aeróbico. Alguns alunos optarão por competição de natação, outros por esportes ligados à natação como biathlon, triátlon, surf etc. Aprendizagem dos 4 estilos, viradas, mergulho elementar, saídas, noções de frequência cardíaca, acompanhar tempos de séries.',
     },
     {
-      idade: 'Acima de 15 anos',
+      fase: 'Trabalho individualizado',
       texto: 'Trabalho individualizado, conforme as necessidades dos alunos. Quando já vêm com um trabalho e desenvolvimento contínuo, deve-se aprimorar e melhorar o seu condicionamento para o dia a dia.',
     },
   ],

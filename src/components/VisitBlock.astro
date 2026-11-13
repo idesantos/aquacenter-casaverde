@@ -10,7 +10,7 @@ import { site, funcionamento, whatsappLink } from '../data/site';
       <li><Icon name="clock" /><div>{funcionamento.linhas.map((l) => <p><strong>{l.dias}</strong> · {l.horario}</p>)}</div></li>
       <li><Icon name="phone" /><a href={site.telefone.link} data-track="telefone">{site.telefone.exibicao}</a></li>
       <li><Icon name="whatsapp" /><a href={whatsappLink()} target="_blank" rel="noopener" data-track="whatsapp">{site.whatsapp.exibicao}</a></li>
-      <li><Icon name="car" /><span>Estacionamento com manobrista</span></li>
+      <li><Icon name="car" /><span>2 estacionamentos gratuitos colados na academia e 1 conveniado</span></li>
     </ul>
     <a class="btn btn--accent" href={site.mapsRota} target="_blank" rel="noopener" data-track="rota"><Icon name="pin" /> Traçar rota</a>
   </div>

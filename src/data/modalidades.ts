@@ -40,35 +40,42 @@ const DIF = {
     'Número limitado de crianças por professor',
     'Avaliação periódica do nível das crianças',
     'Vestiário infantil',
-    'Duchas aquecidas',
-    'Estacionamento com manobrista',
+    '3 estacionamentos: 2 gratuitos colados na academia e 1 conveniado',
   ],
   aguaAdulto: [
     'Piscinas aquecidas o ano inteiro',
-    '2 professores por piscina',
-    'Duchas aquecidas',
-    'Vestiários adultos com mais de 50 armários',
-    'Estacionamento com manobrista',
+    'Limite de alunos por professor',
+    'Professores especializados',
+    '3 estacionamentos: 2 gratuitos colados na academia e 1 conveniado',
   ],
   academia: [
     'Atendimento personalizado, com poucos alunos por professor',
+    'Musculação climatizada',
     'Sala de ginástica com diversas opções de aulas',
-    'Duchas aquecidas',
-    'Vestiários adultos com mais de 50 armários',
-    'Estacionamento com manobrista',
+    'Professores especializados',
+    '3 estacionamentos: 2 gratuitos colados na academia e 1 conveniado',
   ],
   kids: [
     'Número limitado de crianças por professor',
     'Vestiário infantil',
-    'Duchas aquecidas',
-    'Estacionamento com manobrista',
+    '3 estacionamentos: 2 gratuitos colados na academia e 1 conveniado',
   ],
 };
 
 const meta: Omit<Modalidade, keyof Conteudo>[] = [
+  // Bebê e Infantil em páginas separadas, igual à Vila Guilherme (pedido do Ide em 13/11/2026).
   {
-    slug: 'natacao-bebe-infantil',
-    nome: 'Natação Bebê e Infantil',
+    slug: 'natacao-bebe',
+    nome: 'Natação Bebê',
+    resumo: 'Adaptação ao meio líquido com acompanhante, para bebês de 6 a 48 meses.',
+    categorias: ['agua'],
+    // Sem foto de bebê no site antigo: usa a da natação infantil até a academia mandar uma.
+    imagem: natacaoInfantil,
+    diferenciais: DIF.aguaKids,
+  },
+  {
+    slug: 'natacao-infantil',
+    nome: 'Natação Infantil',
     resumo: 'Da adaptação ao meio líquido aos quatro estilos, com a Metodologia Aquativa.',
     categorias: ['agua'],
     imagem: natacaoInfantil,

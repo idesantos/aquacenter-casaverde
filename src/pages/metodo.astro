@@ -31,7 +31,7 @@ import { url } from '../lib/url';
       <div class="deep__head">
         <p class="eyebrow light" data-reveal>Níveis infantis</p>
         <h2 class="h-lg" data-split>Objetivos e mascotes.</h2>
-        <p class="lead" data-reveal>Os níveis são adequados à faixa etária e ao desenvolvimento cognitivo e psicomotor de cada criança.</p>
+        <p class="lead" data-reveal>Os níveis acompanham o desenvolvimento cognitivo e psicomotor de cada criança.</p>
       </div>
       <Journey detalhado />
     </div>
@@ -82,14 +82,14 @@ import { url } from '../lib/url';
     </div>
   </section>
 
-  <section class="section mist" data-depth-label="Faixas etárias">
+  <section class="section mist" data-depth-label="Fases">
     <div class="container">
-      <p class="eyebrow" data-reveal>Faixas etárias</p>
+      <p class="eyebrow" data-reveal>Fases da aprendizagem</p>
       <h2 class="h-md" data-split>O que se espera em cada fase.</h2>
       <div class="faixas">
         {metodo.faixas.map((f, i) => (
           <details data-reveal open={i === 0}>
-            <summary><span>{f.idade}</span><Icon name="arrowDown" /></summary>
+            <summary><span>{f.fase}</span><Icon name="arrowDown" /></summary>
             <p>{f.texto}</p>
           </details>
         ))}

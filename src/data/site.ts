@@ -57,14 +57,13 @@ export function whatsappLink(mensagem: string = MSG_AULA_GRATIS) {
 
 export const diferenciaisAcademia = [
   'Know-how de mais de 30 anos no mercado',
-  'Estacionamento com manobrista',
+  '3 estacionamentos: 2 gratuitos colados na academia e 1 conveniado',
   'Metodologia Aquativa, própria e validada há mais de 20 anos',
   'Espaço da piscina com pé-direito alto, proporcionando amplitude e conforto',
   'Duas piscinas, uma para adultos e outra para crianças',
-  '2 professores por piscina',
+  'Limite de alunos por professor',
   'Vestiário infantil',
-  'Vestiários adultos com mais de 50 armários',
-  'Duchas aquecidas',
+  'Musculação climatizada',
 ];
 
 export const sobre = {
